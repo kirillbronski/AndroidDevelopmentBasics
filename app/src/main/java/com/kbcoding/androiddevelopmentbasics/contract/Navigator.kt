@@ -14,6 +14,7 @@ fun Fragment.navigator(): Navigator {
 interface Navigator {
 
     fun showBoxSelectionScreen(options: Options)
+
     fun showOptionsScreen(options: Options)
 
     fun showAboutScreen()
