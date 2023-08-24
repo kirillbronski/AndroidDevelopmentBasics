@@ -6,5 +6,5 @@ import androidx.annotation.StringRes
 class CustomAction(
     @DrawableRes val iconRes: Int,
     @StringRes val textRes: Int,
-    val customAction: Runnable
+    val onCustomAction: Runnable
 )
