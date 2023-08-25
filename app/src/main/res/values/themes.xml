@@ -2,7 +2,12 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.AndroidDevelopmentBasics" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="materialButtonStyle">@style/DefaultButton</item>
+    </style>
+
+    <style name="DefaultButton" parent="Widget.Material3.Button">
+        <item name="textAllCaps">false</item>
+        <item name="android:minWidth">200dp</item>
     </style>
 
     <style name="Theme.AndroidDevelopmentBasics" parent="Base.Theme.AndroidDevelopmentBasics" />

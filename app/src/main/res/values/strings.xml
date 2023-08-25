@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">AndroidDevelopmentBasics</string>
+    <string name="number">Number: #%1$d</string>
+    <string name="change_uuid">Change UUID</string>
+    <string name="next_fact">Next fact</string>
+    <string name="change_background">Change background</string>
+    <string name="launch_next">Launch next</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
