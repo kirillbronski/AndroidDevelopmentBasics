@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -21,7 +22,11 @@ import com.kbcoding.androiddevelopmentbasics.contract.HasCustomTitle
 import com.kbcoding.androiddevelopmentbasics.contract.Navigator
 import com.kbcoding.androiddevelopmentbasics.contract.ResultListener
 import com.kbcoding.androiddevelopmentbasics.databinding.ActivityMainBinding
+import com.kbcoding.androiddevelopmentbasics.fragments.AboutFragment
+import com.kbcoding.androiddevelopmentbasics.fragments.BoxFragment
+import com.kbcoding.androiddevelopmentbasics.fragments.BoxSelectionFragment
 import com.kbcoding.androiddevelopmentbasics.fragments.MenuFragment
+import com.kbcoding.androiddevelopmentbasics.fragments.OptionsFragment
 import java.io.Serializable
 
 class MainActivity : AppCompatActivity(), Navigator {
@@ -29,7 +34,7 @@ class MainActivity : AppCompatActivity(), Navigator {
     private lateinit var binding: ActivityMainBinding
 
     private val currentFragment: Fragment
-        get() = supportFragmentManager.findFragmentById(R.id.fragmentContainer)!!
+        get() = supportFragmentManager.findFragmentById(R.id.fc_container)!!
 
     private val fragmentListener = object : FragmentManager.FragmentLifecycleCallbacks() {
         override fun onFragmentViewCreated(
@@ -51,7 +56,7 @@ class MainActivity : AppCompatActivity(), Navigator {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.fragmentContainer, MenuFragment())
+                .add(R.id.fc_container, MenuFragment())
                 .commit()
         }
 
@@ -75,19 +80,19 @@ class MainActivity : AppCompatActivity(), Navigator {
     }
 
     override fun showBoxSelectionScreen(options: Options) {
-        TODO("Not yet implemented")
+        launchFragment(BoxSelectionFragment.newInstance(options))
     }
 
     override fun showOptionsScreen(options: Options) {
-        TODO("Not yet implemented")
+        launchFragment(OptionsFragment.newInstance(options = options))
     }
 
     override fun showAboutScreen() {
-        TODO("Not yet implemented")
+        launchFragment(AboutFragment())
     }
 
     override fun showCongratulationsScreen() {
-        TODO("Not yet implemented")
+        launchFragment(BoxFragment())
     }
 
     override fun goBack() {
@@ -131,7 +136,7 @@ class MainActivity : AppCompatActivity(), Navigator {
                 R.anim.slide_out
             )
             .addToBackStack(null)
-            .replace(R.id.fragmentContainer, fragment)
+            .replace(R.id.fc_container, fragment)
             .commit()
     }
 
