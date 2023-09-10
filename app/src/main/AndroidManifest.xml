@@ -21,6 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".HandlerLevel1Activity" android:parentActivityName=".MainActivity" android:label="@string/level1"/>
+        <activity android:name=".HandlerLevel2Activity" android:parentActivityName=".MainActivity" android:label="@string/level2"/>
     </application>
 
 </manifest>
