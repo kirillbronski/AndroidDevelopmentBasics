@@ -3,6 +3,7 @@ package com.kbcoding.androiddevelopmentbasics
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kbcoding.androiddevelopmentbasics.databinding.ActivityMainBinding
 import com.kbcoding.androiddevelopmentbasics.model.User
@@ -43,10 +44,18 @@ class MainActivity : AppCompatActivity() {
             override fun onUserDetails(user: User) {
                 Toast.makeText(this@MainActivity, "User: ${user.name}", Toast.LENGTH_SHORT).show()
             }
+
+            override fun onUserFire(user: User) {
+                usersService.fireUser(user)
+            }
         })
         binding.rvList.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = usersAdapter
+            val itemAnimator = itemAnimator
+            if (itemAnimator is DefaultItemAnimator) {
+                itemAnimator.supportsChangeAnimations = false
+            }
         }
     }
 

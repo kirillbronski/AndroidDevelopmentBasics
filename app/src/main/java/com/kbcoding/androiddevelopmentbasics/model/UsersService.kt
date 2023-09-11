@@ -31,19 +31,30 @@ class UsersService {
 
     fun deleteUser(user: User) {
         //usersList.remove(user) // не рекомендуется если в дата классе будут переопределны методы equals и hashcode
-        val indexToDelete = usersList.indexOfFirst { it.id == user.id }
+        val indexToDelete = findIndexById(user.id)
         if (indexToDelete != -1) {
+            usersList = ArrayList(usersList)
             usersList.removeAt(indexToDelete)
             notifyChanges()
         }
     }
 
     fun moveUser(user: User, moveBy: Int) {
-        val oldIndex = usersList.indexOfFirst { it.id == user.id }
+        val oldIndex = findIndexById(user.id)
         if (oldIndex == -1) return
         val newIndex = oldIndex + moveBy
         if (newIndex < 0 || newIndex >= usersList.size) return
+        usersList = ArrayList(usersList)
         Collections.swap(usersList, oldIndex, newIndex)
+        notifyChanges()
+    }
+
+    fun fireUser(user: User) {
+        val index = findIndexById(user.id)
+        if (index == -1) return
+        val updatedUser = usersList[index].copy(company = "")
+        usersList = ArrayList(usersList)
+        usersList[index] = updatedUser
         notifyChanges()
     }
 
@@ -61,6 +72,8 @@ class UsersService {
             it.invoke(usersList)
         }
     }
+
+    private fun findIndexById(userId: Long): Int = usersList.indexOfFirst { it.id == userId }
 
     companion object {
         private val IMAGES = mutableListOf(
