@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">AndroidDevelopmentBasics</string>
     <string name="item_user_content_description">more</string>
+    <string name="move_up">Move up</string>
+    <string name="move_down">Move down</string>
+    <string name="remove">Remove</string>
 </resources>

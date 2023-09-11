@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private fun initUsersAdapter() {
         usersAdapter = UsersAdapter(object : UsersAdapter.UserActionListener {
             override fun onUserMove(user: User, moveBy: Int) {
-
+                usersService.moveUser(user, moveBy)
             }
 
             override fun onUserDelete(user: User) {

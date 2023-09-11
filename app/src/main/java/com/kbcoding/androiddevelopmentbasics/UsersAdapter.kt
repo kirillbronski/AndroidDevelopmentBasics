@@ -1,7 +1,10 @@
 package com.kbcoding.androiddevelopmentbasics
 
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kbcoding.androiddevelopmentbasics.databinding.ItemUserBinding
@@ -76,8 +79,48 @@ class UsersAdapter(
                 userActionListener.onUserDetails(item)
             }
             binding.moreImageViewButton.setOnClickListener {
-
+                showPopupMenu(it)
             }
         }
+
+        private fun showPopupMenu(view: View) {
+            val context = view.context
+            val popupMenu = PopupMenu(context, view)
+            val position = usersList.indexOfFirst { it.id == item.id }
+
+            popupMenu.menu.add(0, ID_MOVE_UP, Menu.NONE, context.getString(R.string.move_up))
+                .apply {
+                    isEnabled = position > 0
+                }
+            popupMenu.menu.add(0, ID_MOVE_DOWN, Menu.NONE, context.getString(R.string.move_down))
+                .apply {
+                    isEnabled = position < usersList.size - 1
+                }
+            popupMenu.menu.add(0, ID_REMOVE, Menu.NONE, context.getString(R.string.remove))
+
+            popupMenu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    ID_MOVE_UP -> {
+                        userActionListener.onUserMove(item, -1)
+                    }
+
+                    ID_MOVE_DOWN -> {
+                        userActionListener.onUserMove(item, 1)
+                    }
+
+                    ID_REMOVE -> {
+                        userActionListener.onUserDelete(item)
+                    }
+                }
+                return@setOnMenuItemClickListener true
+            }
+            popupMenu.show()
+        }
+    }
+
+    companion object {
+        private const val ID_MOVE_UP = 1
+        private const val ID_MOVE_DOWN = 2
+        private const val ID_REMOVE = 3
     }
 }
