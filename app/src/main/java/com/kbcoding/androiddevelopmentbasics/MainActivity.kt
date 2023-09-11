@@ -2,8 +2,10 @@ package com.kbcoding.androiddevelopmentbasics
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kbcoding.androiddevelopmentbasics.databinding.ActivityMainBinding
+import com.kbcoding.androiddevelopmentbasics.model.User
 import com.kbcoding.androiddevelopmentbasics.model.UsersListener
 import com.kbcoding.androiddevelopmentbasics.model.UsersService
 
@@ -29,7 +31,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initUsersAdapter() {
-        usersAdapter = UsersAdapter()
+        usersAdapter = UsersAdapter(object : UsersAdapter.UserActionListener {
+            override fun onUserMove(user: User, moveBy: Int) {
+
+            }
+
+            override fun onUserDelete(user: User) {
+                usersService.deleteUser(user)
+            }
+
+            override fun onUserDetails(user: User) {
+                Toast.makeText(this@MainActivity, "User: ${user.name}", Toast.LENGTH_SHORT).show()
+            }
+        })
         binding.rvList.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = usersAdapter

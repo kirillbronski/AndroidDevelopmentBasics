@@ -7,7 +7,17 @@ import com.bumptech.glide.Glide
 import com.kbcoding.androiddevelopmentbasics.databinding.ItemUserBinding
 import com.kbcoding.androiddevelopmentbasics.model.User
 
-class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UsersViewHolder>() {
+class UsersAdapter(
+    private val userActionListener: UserActionListener
+) : RecyclerView.Adapter<UsersAdapter.UsersViewHolder>() {
+
+    interface UserActionListener {
+        fun onUserMove(user: User, moveBy: Int)
+
+        fun onUserDelete(user: User)
+
+        fun onUserDetails(user: User)
+    }
 
     var usersList: List<User> = emptyList()
         set(newValue) {
@@ -33,22 +43,23 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UsersViewHolder>() {
         val binding: ItemUserBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private lateinit var userLocal: User
+        private lateinit var item: User
 
         fun bind(user: User) {
 
-            this.userLocal = user
+            this.item = user
 
             updateItemUi()
+            initListeners()
         }
 
         private fun updateItemUi() {
             with(binding) {
-                userNameTextView.text = userLocal.name
-                userCompanyTextView.text = userLocal.company
-                if (userLocal.photo.isNotBlank()) {
+                userNameTextView.text = item.name
+                userCompanyTextView.text = item.company
+                if (item.photo.isNotBlank()) {
                     Glide.with(photoImageView.context)
-                        .load(userLocal.photo)
+                        .load(item.photo)
                         .circleCrop()
                         .placeholder(R.drawable.baseline_account_circle_24)
                         .error(R.drawable.baseline_account_circle_24)
@@ -57,6 +68,15 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UsersViewHolder>() {
                     Glide.with(photoImageView.context).clear(photoImageView)
                     photoImageView.setImageResource(R.drawable.baseline_account_circle_24)
                 }
+            }
+        }
+
+        private fun initListeners() {
+            itemView.setOnClickListener {
+                userActionListener.onUserDetails(item)
+            }
+            binding.moreImageViewButton.setOnClickListener {
+
             }
         }
     }
