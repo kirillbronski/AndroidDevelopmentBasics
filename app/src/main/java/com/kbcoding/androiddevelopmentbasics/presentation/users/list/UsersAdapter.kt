@@ -1,4 +1,4 @@
-package com.kbcoding.androiddevelopmentbasics
+package com.kbcoding.androiddevelopmentbasics.presentation.users.list
 
 import android.view.LayoutInflater
 import android.view.Menu
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.databinding.ItemUserBinding
 import com.kbcoding.androiddevelopmentbasics.model.User
 
