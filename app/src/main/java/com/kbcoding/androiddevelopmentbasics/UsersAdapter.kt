@@ -6,38 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kbcoding.androiddevelopmentbasics.databinding.ItemUserBinding
 import com.kbcoding.androiddevelopmentbasics.model.User
 
-
-class UsersDiffCallback(
-    private val oldList: List<User>,
-    private val newList: List<User>
-) : DiffUtil.Callback() {
-
-    override fun getOldListSize(): Int = oldList.size
-    override fun getNewListSize(): Int = newList.size
-
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldUser = oldList[oldItemPosition]
-        val newUser = newList[newItemPosition]
-        return oldUser.id == newUser.id
-    }
-
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldUser = oldList[oldItemPosition]
-        val newUser = newList[newItemPosition]
-        return oldUser == newUser
-    }
-
-}
-
 class UsersAdapter(
     private val userActionListener: UserActionListener
-) : RecyclerView.Adapter<UsersAdapter.UsersViewHolder>() {
-    //ListAdapter<User, UsersAdapter.UsersViewHolder>(DiffCallback)
+) : ListAdapter<User, UsersAdapter.UsersViewHolder>(DiffCallback) {
 
     interface UserActionListener {
         fun onUserMove(user: User, moveBy: Int)
@@ -49,14 +26,6 @@ class UsersAdapter(
         fun onUserFire(user: User)
     }
 
-    var usersList: List<User> = emptyList()
-        set(newValue) {
-            val diffCallback = UsersDiffCallback(field, newValue)
-            val diffResult = DiffUtil.calculateDiff(diffCallback)
-            field = newValue
-            diffResult.dispatchUpdatesTo(this)
-        }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemUserBinding.inflate(inflater, parent, false)
@@ -64,28 +33,24 @@ class UsersAdapter(
     }
 
     override fun onBindViewHolder(holder: UsersViewHolder, position: Int) {
-        holder.bind(usersList[position])
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return usersList.size
-    }
+    object DiffCallback : DiffUtil.ItemCallback<User>() {
+        override fun areItemsTheSame(
+            oldItem: User,
+            newItem: User
+        ): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-//    object DiffCallback : DiffUtil.ItemCallback<User>() {
-//        override fun areItemsTheSame(
-//            oldItem: User,
-//            newItem: User
-//        ): Boolean {
-//            return oldItem.id == newItem.id
-//        }
-//
-//        override fun areContentsTheSame(
-//            oldItem: User,
-//            newItem: User
-//        ): Boolean {
-//            return oldItem == newItem
-//        }
-//    }
+        override fun areContentsTheSame(
+            oldItem: User,
+            newItem: User
+        ): Boolean {
+            return oldItem == newItem
+        }
+    }
 
     inner class UsersViewHolder(
         val binding: ItemUserBinding
@@ -137,7 +102,7 @@ class UsersAdapter(
         private fun showPopupMenu(view: View) {
             val context = view.context
             val popupMenu = PopupMenu(context, view)
-            val position = usersList.indexOfFirst { it.id == item.id }
+            val position = currentList.indexOfFirst { it.id == item.id }
 
             popupMenu.menu.add(0, ID_MOVE_UP, Menu.NONE, context.getString(R.string.move_up))
                 .apply {
@@ -145,7 +110,7 @@ class UsersAdapter(
                 }
             popupMenu.menu.add(0, ID_MOVE_DOWN, Menu.NONE, context.getString(R.string.move_down))
                 .apply {
-                    isEnabled = position < usersList.size - 1
+                    isEnabled = position < currentList.size - 1
                 }
             popupMenu.menu.add(0, ID_REMOVE, Menu.NONE, context.getString(R.string.remove))
 

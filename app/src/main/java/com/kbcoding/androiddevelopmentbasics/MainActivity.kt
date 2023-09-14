@@ -60,6 +60,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val usersListener: UsersListener = {
-        usersAdapter.usersList = it
+        usersAdapter.submitList(it)
     }
 }
