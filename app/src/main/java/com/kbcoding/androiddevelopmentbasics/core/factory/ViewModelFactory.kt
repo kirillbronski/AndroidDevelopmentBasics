@@ -3,6 +3,7 @@ package com.kbcoding.androiddevelopmentbasics.core.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.kbcoding.androiddevelopmentbasics.App
+import com.kbcoding.androiddevelopmentbasics.presentation.users.details.UserDetailsViewModel
 import com.kbcoding.androiddevelopmentbasics.presentation.users.list.UsersListViewModel
 
 class ViewModelFactory(
@@ -13,6 +14,9 @@ class ViewModelFactory(
         val viewModel = when (modelClass) {
             UsersListViewModel::class.java -> {
                 UsersListViewModel(app.usersService)
+            }
+            UserDetailsViewModel::class.java -> {
+                UserDetailsViewModel(app.usersService)
             }
 
             else -> {

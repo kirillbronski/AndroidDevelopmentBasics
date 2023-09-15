@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kbcoding.androiddevelopmentbasics.core.extensions.factory
+import com.kbcoding.androiddevelopmentbasics.core.extensions.navigator
 import com.kbcoding.androiddevelopmentbasics.core.presentation.BaseFragment
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentUsersListBinding
 import com.kbcoding.androiddevelopmentbasics.model.User
@@ -48,7 +49,7 @@ class UsersListFragment : BaseFragment<FragmentUsersListBinding>() {
             }
 
             override fun onUserDetails(user: User) {
-                Toast.makeText(requireContext(), "User: ${user.name}", Toast.LENGTH_SHORT).show()
+                navigator().showDetails(user)
             }
 
             override fun onUserFire(user: User) {

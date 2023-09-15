@@ -1,6 +1,7 @@
 package com.kbcoding.androiddevelopmentbasics.model
 
 import com.github.javafaker.Faker
+import com.kbcoding.androiddevelopmentbasics.core.UserNotFoundException
 import java.util.Collections
 
 // слушатель
@@ -27,6 +28,14 @@ class UsersService {
 
     fun getUsers(): List<User> {
         return usersList
+    }
+
+    fun getById(id: Long): UserDetails {
+        val user = usersList.firstOrNull { it.id == id } ?: throw UserNotFoundException()
+        return UserDetails(
+            user = user,
+            details = Faker.instance().lorem().paragraphs(3).joinToString("/n/n")
+        )
     }
 
     fun deleteUser(user: User) {
