@@ -2,7 +2,10 @@ package com.kbcoding.androiddevelopmentbasics.model
 
 import com.github.javafaker.Faker
 import com.kbcoding.androiddevelopmentbasics.core.UserNotFoundException
+import com.kbcoding.androiddevelopmentbasics.core.tasks.SimpleTask
+import com.kbcoding.androiddevelopmentbasics.core.tasks.Task
 import java.util.Collections
+import java.util.concurrent.Callable
 
 // слушатель
 typealias UsersListener = (usersListener: List<User>) -> Unit
@@ -12,8 +15,10 @@ class UsersService {
     private var usersList = mutableListOf<User>()
 
     private val listeners = mutableSetOf<UsersListener>()
+    private var loaded = false
 
-    init {
+    fun loadUsers(): Task<Unit> = SimpleTask<Unit>(Callable {
+        Thread.sleep(2000)
         val faker = Faker.instance()
         usersList = (1..100).map {
             IMAGES.shuffle()
@@ -24,52 +29,56 @@ class UsersService {
                 photo = IMAGES[it % IMAGES.size]
             )
         }.toMutableList()
-    }
+        loaded = true
+        notifyChanges()
+    })
 
-    fun getUsers(): List<User> {
-        return usersList
-    }
-
-    fun getById(id: Long): UserDetails {
+    fun getById(id: Long): Task<UserDetails> = SimpleTask<UserDetails>(Callable {
+        Thread.sleep(2000)
         val user = usersList.firstOrNull { it.id == id } ?: throw UserNotFoundException()
-        return UserDetails(
+        return@Callable UserDetails(
             user = user,
             details = Faker.instance().lorem().paragraphs(3).joinToString("/n/n")
         )
-    }
+    })
 
-    fun deleteUser(user: User) {
+    fun deleteUser(user: User): Task<Unit> = SimpleTask<Unit>(Callable {
         //usersList.remove(user) // не рекомендуется если в дата классе будут переопределны методы equals и hashcode
+        Thread.sleep(2000)
         val indexToDelete = findIndexById(user.id)
         if (indexToDelete != -1) {
             usersList = ArrayList(usersList)
             usersList.removeAt(indexToDelete)
             notifyChanges()
         }
-    }
+    })
 
-    fun moveUser(user: User, moveBy: Int) {
+    fun moveUser(user: User, moveBy: Int): Task<Unit> = SimpleTask<Unit>(Callable {
+        Thread.sleep(2000)
         val oldIndex = findIndexById(user.id)
-        if (oldIndex == -1) return
+        if (oldIndex == -1) return@Callable
         val newIndex = oldIndex + moveBy
-        if (newIndex < 0 || newIndex >= usersList.size) return
+        if (newIndex < 0 || newIndex >= usersList.size) return@Callable
         usersList = ArrayList(usersList)
         Collections.swap(usersList, oldIndex, newIndex)
         notifyChanges()
-    }
+    })
 
-    fun fireUser(user: User) {
+    fun fireUser(user: User): Task<Unit> = SimpleTask<Unit>(Callable {
+        Thread.sleep(2000)
         val index = findIndexById(user.id)
-        if (index == -1) return
+        if (index == -1) return@Callable
         val updatedUser = usersList[index].copy(company = "")
         usersList = ArrayList(usersList)
         usersList[index] = updatedUser
         notifyChanges()
-    }
+    })
 
     fun addListener(listener: UsersListener) {
         listeners.add(listener)
-        listener.invoke(usersList)
+        if (loaded) {
+            listener.invoke(usersList)
+        }
     }
 
     fun removeListener(listener: UsersListener) {
@@ -77,6 +86,7 @@ class UsersService {
     }
 
     private fun notifyChanges() {
+        if (!loaded) return
         listeners.forEach {
             it.invoke(usersList)
         }
