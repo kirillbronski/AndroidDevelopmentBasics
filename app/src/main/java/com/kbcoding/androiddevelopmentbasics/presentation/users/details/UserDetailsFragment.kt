@@ -1,7 +1,6 @@
 package com.kbcoding.androiddevelopmentbasics.presentation.users.details
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,8 @@ import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.core.extensions.factory
 import com.kbcoding.androiddevelopmentbasics.core.extensions.navigator
 import com.kbcoding.androiddevelopmentbasics.core.presentation.BaseFragment
+import com.kbcoding.androiddevelopmentbasics.core.result.Result
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentUserDetailsBinding
-import com.kbcoding.androiddevelopmentbasics.presentation.users.list.UsersListViewModel
 
 class UserDetailsFragment : BaseFragment<FragmentUserDetailsBinding>() {
 
@@ -21,7 +20,7 @@ class UserDetailsFragment : BaseFragment<FragmentUserDetailsBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        viewModel.loadUser(requireArguments().getLong(ARG_USER_ID))
     }
 
     override fun createBinding(
@@ -32,9 +31,6 @@ class UserDetailsFragment : BaseFragment<FragmentUserDetailsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val id = arguments?.getLong(ARG_USER_ID)
-        viewModel.loadUser(id!!)
-
         setupListener()
         setupObservers()
     }
@@ -42,16 +38,28 @@ class UserDetailsFragment : BaseFragment<FragmentUserDetailsBinding>() {
     private fun setupListener() {
         binding.deleteButton.setOnClickListener {
             viewModel.deleteUser()
-            navigator().toast(R.string.user_has_been_deleted)
-            navigator().goBack()
         }
     }
 
     private fun setupObservers() {
-        viewModel.userDetails.observe(viewLifecycleOwner) {
-            binding.userNameTextView.text = it.user.name
-            setupPhoto(it.user.photo)
-            binding.userDetailsTextView.text = it.details
+        viewModel.state.observe(viewLifecycleOwner) {
+            binding.contentContainer.visibility = if (it.showContent) {
+                val userDetails = (it.userDetailsResult as Result.Success).data
+                binding.userNameTextView.text = userDetails.user.name
+                setupPhoto(userDetails.user.photo)
+                binding.userDetailsTextView.text = userDetails.details
+                View.VISIBLE
+            } else {
+                View.GONE
+        }
+            binding.progressBar.visibility = if (it.showProgress) View.VISIBLE else View.GONE
+            binding.deleteButton.isEnabled = it.enableDeleteButton
+        }
+        viewModel.actionShowToast.observe(viewLifecycleOwner) {
+            it.getValue()?.let { messageRes -> navigator().toast(messageRes) }
+        }
+        viewModel.actionGoBack.observe(viewLifecycleOwner) {
+            it.getValue()?.let { navigator().goBack() }
         }
     }
 

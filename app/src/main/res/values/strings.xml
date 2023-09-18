@@ -13,4 +13,5 @@
     <string name="cant_load_user_details">Can\'t load user details</string>
     <string name="cant_delete_user">Can\'t delete the user</string>
     <string name="cant_move_user">Can\'t move user</string>
+    <string name="cant_fire_user">Can\'t fire user</string>
 </resources>

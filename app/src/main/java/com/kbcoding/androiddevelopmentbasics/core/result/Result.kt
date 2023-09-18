@@ -10,4 +10,9 @@ sealed class Result<T> {
 
     class Empty<T> : Result<T>()
 
+    fun <R> map(mapper: (T) -> R): Result<R> {
+        if (this is Success) return Success(mapper(data))
+        return this as Result<R>
+    }
+
 }
