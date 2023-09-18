@@ -1,4 +1,4 @@
-package com.kbcoding.androiddevelopmentbasics
+package com.kbcoding.androiddevelopmentbasics.core.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,8 @@ abstract class BaseFragment<Binding : ViewBinding> : Fragment() {
 
     private var _binding: Binding? = null
     val binding get() = _binding!!
+
+    abstract val viewModel: BaseViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
