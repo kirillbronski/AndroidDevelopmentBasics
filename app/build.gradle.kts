@@ -40,7 +40,10 @@ android {
 
 dependencies {
 
+    implementation ("androidx.activity:activity-ktx:1.7.2")
     implementation ("androidx.fragment:fragment-ktx:1.6.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.2")
     //implementation ("androidx.recyclerview:recyclerview:1.3.1")
     implementation("com.github.javafaker:javafaker:1.0.2")
     implementation("com.github.bumptech.glide:glide:4.16.0")

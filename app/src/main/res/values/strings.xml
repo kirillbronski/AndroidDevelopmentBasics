@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidDevelopmentBasics</string>
+    <string name="generate_colors">Generate colors</string>
 </resources>
