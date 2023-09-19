@@ -41,6 +41,7 @@ android {
 dependencies {
 
     implementation ("androidx.fragment:fragment-ktx:1.6.1")
+    implementation ("androidx.activity:activity-ktx:1.7.2")
     //implementation ("androidx.recyclerview:recyclerview:1.3.1")
     implementation("com.github.javafaker:javafaker:1.0.2")
     implementation("com.github.bumptech.glide:glide:4.16.0")
