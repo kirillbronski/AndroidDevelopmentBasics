@@ -1,4 +1,4 @@
-package com.kbcoding.androiddevelopmentbasics.utils
+package com.kbcoding.core.utils
 
 class Event<T>(
     private val value: T

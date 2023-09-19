@@ -1,6 +1,6 @@
-package com.kbcoding.androiddevelopmentbasics.presentation
+package com.kbcoding.core.navigator
 
-import com.kbcoding.androiddevelopmentbasics.presentation.base.BaseScreen
+import com.kbcoding.core.presentation.BaseScreen
 
 /**
  * Navigation for your application

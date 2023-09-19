@@ -1,3 +1,0 @@
-package com.kbcoding.androiddevelopmentbasics.model
-
-interface Repository

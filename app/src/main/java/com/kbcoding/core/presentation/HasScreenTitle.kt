@@ -1,4 +1,4 @@
-package com.kbcoding.androiddevelopmentbasics.presentation
+package com.kbcoding.core.presentation
 
 /**
  * If your fragment wants to show custom screen title in the toolbar, implement this

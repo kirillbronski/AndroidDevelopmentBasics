@@ -1,9 +1,9 @@
-package com.kbcoding.androiddevelopmentbasics.presentation.base
+package com.kbcoding.core.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kbcoding.androiddevelopmentbasics.utils.Event
+import com.kbcoding.core.utils.Event
 
 typealias LiveEvent<T> = LiveData<Event<T>>
 typealias MutableLiveEvent<T> = MutableLiveData<Event<T>>

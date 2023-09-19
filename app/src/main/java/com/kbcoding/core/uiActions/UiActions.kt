@@ -1,4 +1,4 @@
-package com.kbcoding.androiddevelopmentbasics.presentation
+package com.kbcoding.core.uiActions
 
 /**
  * Common actions that can be performed in the view-model

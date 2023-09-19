@@ -1,41 +1,47 @@
 package com.kbcoding.androiddevelopmentbasics
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import androidx.activity.viewModels
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModelProvider
-import com.kbcoding.androiddevelopmentbasics.presentation.HasScreenTitle
-import com.kbcoding.androiddevelopmentbasics.presentation.base.BaseFragment
+import androidx.appcompat.app.AppCompatActivity
 import com.kbcoding.androiddevelopmentbasics.presentation.currentColor.CurrentColorFragment
+import com.kbcoding.core.ActivityScopeViewModel
+import com.kbcoding.core.navigator.IntermediateNavigator
+import com.kbcoding.core.navigator.StackFragmentNavigator
+import com.kbcoding.core.presentation.FragmentsHolder
+import com.kbcoding.core.uiActions.AndroidUiActions
+import com.kbcoding.core.utils.viewModelCreator
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FragmentsHolder {
 
-    private val activityViewModel by viewModels<MainViewModel> {
-        ViewModelProvider.AndroidViewModelFactory(
-            application
+    private lateinit var navigator: StackFragmentNavigator
+
+    private val activityViewModel by viewModelCreator<ActivityScopeViewModel> {
+        ActivityScopeViewModel(
+            uiActions = AndroidUiActions(applicationContext),
+            navigator = IntermediateNavigator()
         )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (savedInstanceState == null) {
-            // define the initial screen that should be launched when app starts.
-            activityViewModel.launchFragment(
-                activity = this,
-                screen = CurrentColorFragment.Screen(),
-                addToBackStack = false
-            )
-        }
 
-        supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentCallbacks, false)
+        navigator = StackFragmentNavigator(
+            activity = this,
+            containerId = R.id.fc_main_container,
+            defaultTitle = getString(R.string.app_name),
+            animations = StackFragmentNavigator.Animations(
+                enterAnim = R.anim.enter,
+                exitAnim = R.anim.exit,
+                popEnterAnim = R.anim.pop_enter,
+                popExitAnim = R.anim.pop_exit
+            ),
+            initialScreenCreator = { CurrentColorFragment.Screen() }
+        )
+        navigator.onCreate(savedInstanceState)
     }
 
     override fun onDestroy() {
-        supportFragmentManager.unregisterFragmentLifecycleCallbacks(fragmentCallbacks)
+        navigator.onDestroy()
         super.onDestroy()
     }
 
@@ -47,42 +53,20 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         // execute navigation actions only when activity is active
-        activityViewModel.whenActivityActive.resource = this
+        activityViewModel.navigator.setTarget(navigator)
     }
 
     override fun onPause() {
         super.onPause()
         // postpone navigation actions if activity is not active
-        activityViewModel.whenActivityActive.resource = null
+        activityViewModel.navigator.setTarget(null)
     }
 
-    fun notifyScreenUpdates() {
-        val f = supportFragmentManager.findFragmentById(R.id.fc_main_container)
-
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            // more than 1 screen -> show back button in the toolbar
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        } else {
-            supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        }
-
-        if (f is HasScreenTitle && f.getScreenTitle() != null) {
-            // fragment has custom screen title -> display it
-            supportActionBar?.title = f.getScreenTitle()
-        } else {
-            supportActionBar?.title = getString(R.string.app_name)
-        }
-
-        val result = activityViewModel.result.value?.getValue() ?: return
-        if (f is BaseFragment<*>) {
-            // has result that can be delivered to the screen's view-model
-            f.viewModel.onResult(result)
-        }
+    override fun notifyScreenUpdates() {
+        navigator.notifyScreenUpdates()
     }
 
-    private val fragmentCallbacks = object : FragmentManager.FragmentLifecycleCallbacks() {
-        override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
-            notifyScreenUpdates()
-        }
+    override fun getActivityScopeViewModel(): ActivityScopeViewModel {
+        return activityViewModel
     }
 }

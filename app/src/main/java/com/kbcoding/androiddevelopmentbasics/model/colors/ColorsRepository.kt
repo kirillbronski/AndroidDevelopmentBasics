@@ -1,6 +1,6 @@
 package com.kbcoding.androiddevelopmentbasics.model.colors
 
-import com.kbcoding.androiddevelopmentbasics.model.Repository
+import com.kbcoding.core.model.Repository
 
 typealias ColorListener = (NamedColor) -> Unit
 interface ColorsRepository : Repository {

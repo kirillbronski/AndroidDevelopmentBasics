@@ -1,4 +1,4 @@
-package com.kbcoding.androiddevelopmentbasics.presentation.base
+package com.kbcoding.core.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -29,10 +29,11 @@ abstract class BaseFragment<Binding : ViewBinding> : Fragment() {
         _binding = null
     }
 
+    /**
+     * Call this method when activity controls (e.g. toolbar) should be re-rendered
+     */
     fun notifyScreenUpdates() {
-        // if you have more than 1 activity -> you should use a separate interface instead of direct
-        // cast to MainActivity
-        (requireActivity() as MainActivity).notifyScreenUpdates()
+        (requireActivity() as FragmentsHolder).notifyScreenUpdates()
     }
 
     abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): Binding

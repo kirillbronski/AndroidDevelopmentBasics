@@ -1,4 +1,4 @@
-package com.kbcoding.androiddevelopmentbasics.utils
+package com.kbcoding.core.utils
 
 typealias ResourceAction<T> = (T) -> Unit
 

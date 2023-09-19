@@ -6,9 +6,9 @@ import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.model.colors.ColorListener
 import com.kbcoding.androiddevelopmentbasics.model.colors.ColorsRepository
 import com.kbcoding.androiddevelopmentbasics.model.colors.NamedColor
-import com.kbcoding.androiddevelopmentbasics.presentation.Navigator
-import com.kbcoding.androiddevelopmentbasics.presentation.UiActions
-import com.kbcoding.androiddevelopmentbasics.presentation.base.BaseViewModel
+import com.kbcoding.core.navigator.Navigator
+import com.kbcoding.core.uiActions.UiActions
+import com.kbcoding.core.presentation.BaseViewModel
 import com.kbcoding.androiddevelopmentbasics.presentation.changeColor.ChangeColorFragment
 
 class CurrentColorViewModel(
