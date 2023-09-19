@@ -12,7 +12,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val viewModel by viewModels<MainViewModel>()
+    // private val viewModel by viewModels<MainViewModel>() // без фабрики андроид автоматически подставит в конструктор saved state handle
+    private val viewModel by viewModels<MainViewModel> { ViewModelFactory(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
