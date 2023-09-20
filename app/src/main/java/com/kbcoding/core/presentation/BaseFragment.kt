@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.kbcoding.androiddevelopmentbasics.MainActivity
+import com.kbcoding.core.model.ErrorResult
+import com.kbcoding.core.model.PendingResult
+import com.kbcoding.core.model.Result
+import com.kbcoding.core.model.SuccessResult
 
 abstract class BaseFragment<Binding : ViewBinding> : Fragment() {
 
@@ -37,4 +41,19 @@ abstract class BaseFragment<Binding : ViewBinding> : Fragment() {
     }
 
     abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): Binding
+
+    fun <T> renderResult(
+        root: ViewGroup,
+        result: Result<T>,
+        onPending: () -> Unit,
+        onError: (Exception) -> Unit,
+        onSuccess: (T) -> Unit,
+    ) {
+        root.children.forEach { it.visibility = View.GONE }
+        when (result) {
+            is SuccessResult -> onSuccess(result.data)
+            is ErrorResult -> onError(result.exception)
+            is PendingResult -> onPending()
+        }
+    }
 }

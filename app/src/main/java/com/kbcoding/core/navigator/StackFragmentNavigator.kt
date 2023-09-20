@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.core.ARG_SCREEN
 import com.kbcoding.core.presentation.BaseFragment
 import com.kbcoding.core.presentation.BaseScreen
@@ -97,7 +96,12 @@ class StackFragmentNavigator(
     }
 
     private val fragmentCallbacks = object : FragmentManager.FragmentLifecycleCallbacks() {
-        override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
+        override fun onFragmentViewCreated(
+            fm: FragmentManager,
+            f: Fragment,
+            v: View,
+            savedInstanceState: Bundle?
+        ) {
             notifyScreenUpdates()
             publishResults(f)
         }

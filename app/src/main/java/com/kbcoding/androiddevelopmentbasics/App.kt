@@ -5,7 +5,7 @@ import com.kbcoding.androiddevelopmentbasics.model.colors.InMemoryColorsReposito
 import com.kbcoding.core.model.Repository
 import com.kbcoding.core.presentation.BaseApplication
 
-class App: Application(), BaseApplication {
+class App : Application(), BaseApplication {
 
     /**
      * Place your repositories here, now we have only 1 repository

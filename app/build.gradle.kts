@@ -40,6 +40,8 @@ android {
 
 dependencies {
 
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
+
     implementation ("androidx.fragment:fragment-ktx:1.6.1")
     implementation ("androidx.activity:activity-ktx:1.7.2")
     //implementation ("androidx.recyclerview:recyclerview:1.3.1")

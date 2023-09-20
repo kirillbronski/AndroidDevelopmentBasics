@@ -2,7 +2,6 @@ package com.kbcoding.core.uiActions
 
 import android.content.Context
 import android.widget.Toast
-import com.kbcoding.androiddevelopmentbasics.App
 
 class AndroidUiActions(
     private val appContext: Context

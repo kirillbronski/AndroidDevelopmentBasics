@@ -3,6 +3,7 @@ package com.kbcoding.androiddevelopmentbasics.model.colors
 import com.kbcoding.core.model.Repository
 
 typealias ColorListener = (NamedColor) -> Unit
+
 interface ColorsRepository : Repository {
 
     var currentColor: NamedColor
