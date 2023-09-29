@@ -14,6 +14,7 @@ import com.kbcoding.core.model.FinalResult
 import com.kbcoding.core.model.PendingResult
 import com.kbcoding.core.model.SuccessResult
 import com.kbcoding.core.model.tasks.TasksFactory
+import com.kbcoding.core.model.tasks.dispatchers.Dispatcher
 import com.kbcoding.core.navigator.Navigator
 import com.kbcoding.core.presentation.BaseViewModel
 import com.kbcoding.core.presentation.LiveResult
@@ -29,8 +30,9 @@ class ChangeColorViewModel(
     private val uiActions: UiActions,
     private val colorsRepository: ColorsRepository,
     private val tasksFactory: TasksFactory,
-    savedStateHandle: SavedStateHandle
-) : BaseViewModel(), ColorsAdapter.Listener {
+    savedStateHandle: SavedStateHandle,
+    dispatcher: Dispatcher
+) : BaseViewModel(dispatcher), ColorsAdapter.Listener {
 
     // input sources
     private val _availableColors = MutableLiveResult<List<NamedColor>>(PendingResult())

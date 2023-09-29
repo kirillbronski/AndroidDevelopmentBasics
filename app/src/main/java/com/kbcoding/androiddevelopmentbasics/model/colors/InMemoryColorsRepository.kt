@@ -3,9 +3,11 @@ package com.kbcoding.androiddevelopmentbasics.model.colors
 import android.graphics.Color
 import com.kbcoding.core.model.tasks.Task
 import com.kbcoding.core.model.tasks.TasksFactory
+import com.kbcoding.core.model.tasks.ThreadUtils
 
 class InMemoryColorsRepository(
-    private val tasksFactory: TasksFactory
+    private val tasksFactory: TasksFactory,
+    private val threadUtils: ThreadUtils
 ) : ColorsRepository {
 
     private var currentColor: NamedColor = AVAILABLE_COLORS[0]
@@ -21,22 +23,22 @@ class InMemoryColorsRepository(
     }
 
     override fun getAvailableColors(): Task<List<NamedColor>> = tasksFactory.async {
-        Thread.sleep(1000)
+        threadUtils.sleep(1000)
         return@async AVAILABLE_COLORS
     }
 
     override fun getById(id: Long): Task<NamedColor> = tasksFactory.async {
-        Thread.sleep(1000)
+        threadUtils.sleep(1000)
         return@async AVAILABLE_COLORS.first { it.id == id }
     }
 
     override fun getCurrentColor(): Task<NamedColor> = tasksFactory.async {
-        Thread.sleep(1000)
+        threadUtils.sleep(1000)
         return@async currentColor
     }
 
     override fun setCurrentColor(color: NamedColor): Task<Unit> = tasksFactory.async {
-        Thread.sleep(1000)
+        threadUtils.sleep(1000)
         if (currentColor != color) {
             currentColor = color
             listeners.forEach { it(color) }

@@ -5,6 +5,7 @@ import android.os.Looper
 import com.kbcoding.core.model.ErrorResult
 import com.kbcoding.core.model.FinalResult
 import com.kbcoding.core.model.SuccessResult
+import com.kbcoding.core.model.tasks.dispatchers.Dispatcher
 import java.lang.Exception
 
 private val handler = Handler(Looper.getMainLooper())
@@ -28,7 +29,7 @@ class SimpleTasksFactory : TasksFactory {
 
         override fun await(): T = body()
 
-        override fun enqueue(listener: TaskListener<T>) {
+        override fun enqueue(dispatcher: Dispatcher, listener: TaskListener<T>) {
             thread = Thread {
                 try {
                     val data = body()

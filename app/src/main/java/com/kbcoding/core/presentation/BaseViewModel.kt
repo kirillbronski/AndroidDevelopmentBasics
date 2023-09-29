@@ -8,6 +8,7 @@ import com.kbcoding.core.model.PendingResult
 import com.kbcoding.core.model.Result
 import com.kbcoding.core.model.tasks.Task
 import com.kbcoding.core.model.tasks.TaskListener
+import com.kbcoding.core.model.tasks.dispatchers.Dispatcher
 import com.kbcoding.core.utils.Event
 
 typealias LiveEvent<T> = LiveData<Event<T>>
@@ -20,7 +21,9 @@ typealias MediatorLiveResult<T> = MediatorLiveData<Result<T>>
 /**
  * Base class for all view-models.
  */
-open class BaseViewModel : ViewModel() {
+open class BaseViewModel(
+    private val dispatcher: Dispatcher
+) : ViewModel() {
 
     private val tasks = mutableSetOf<Task<*>>()
 
@@ -44,7 +47,7 @@ open class BaseViewModel : ViewModel() {
      */
     fun <T> Task<T>.safeEnqueue(listener: TaskListener<T>? = null) {
         tasks.add(this)
-        this.enqueue {
+        this.enqueue(dispatcher) {
             tasks.remove(this)
             listener?.invoke(it)
         }

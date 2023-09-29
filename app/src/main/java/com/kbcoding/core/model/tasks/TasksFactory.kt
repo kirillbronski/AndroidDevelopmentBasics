@@ -7,7 +7,7 @@ typealias TaskBody<T> = () -> T
 /**
  * Factory for creating async task instances ([Task]) from synchronous code defined by [TaskBody]
  */
-interface TasksFactory : Repository {
+interface TasksFactory {
 
     /**
      * Create a new [Task] instance from the specified body.

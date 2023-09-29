@@ -1,28 +1,26 @@
 package com.kbcoding.androiddevelopmentbasics.presentation.currentColor
 
-import androidx.lifecycle.viewModelScope
 import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.model.colors.ColorListener
 import com.kbcoding.androiddevelopmentbasics.model.colors.ColorsRepository
 import com.kbcoding.androiddevelopmentbasics.model.colors.NamedColor
 import com.kbcoding.androiddevelopmentbasics.presentation.changeColor.ChangeColorFragment
-import com.kbcoding.core.model.ErrorResult
 import com.kbcoding.core.model.PendingResult
 import com.kbcoding.core.model.SuccessResult
 import com.kbcoding.core.model.takeSuccess
+import com.kbcoding.core.model.tasks.dispatchers.Dispatcher
 import com.kbcoding.core.navigator.Navigator
 import com.kbcoding.core.presentation.BaseViewModel
 import com.kbcoding.core.presentation.LiveResult
 import com.kbcoding.core.presentation.MutableLiveResult
 import com.kbcoding.core.uiActions.UiActions
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class CurrentColorViewModel(
     private val navigator: Navigator,
     private val uiActions: UiActions,
-    private val colorsRepository: ColorsRepository
-) : BaseViewModel() {
+    private val colorsRepository: ColorsRepository,
+    dispatcher: Dispatcher
+) : BaseViewModel(dispatcher) {
 
     private val _currentColor = MutableLiveResult<NamedColor>(PendingResult())
     val currentColor: LiveResult<NamedColor> = _currentColor
