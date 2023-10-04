@@ -69,4 +69,9 @@ class MainActivity : AppCompatActivity(), FragmentsHolder {
     override fun getActivityScopeViewModel(): ActivityScopeViewModel {
         return activityViewModel
     }
+
+    override fun onBackPressed() {
+        navigator.onBackPressed()
+        super.onBackPressed()
+    }
 }

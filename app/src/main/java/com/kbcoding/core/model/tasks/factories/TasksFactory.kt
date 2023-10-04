@@ -1,6 +1,6 @@
-package com.kbcoding.core.model.tasks
+package com.kbcoding.core.model.tasks.factories
 
-import com.kbcoding.core.model.Repository
+import com.kbcoding.core.model.tasks.Task
 
 typealias TaskBody<T> = () -> T
 

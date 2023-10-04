@@ -2,26 +2,31 @@ package com.kbcoding.androiddevelopmentbasics
 
 import android.app.Application
 import com.kbcoding.androiddevelopmentbasics.model.colors.InMemoryColorsRepository
-import com.kbcoding.core.model.Repository
-import com.kbcoding.core.model.tasks.SimpleTasksFactory
 import com.kbcoding.core.model.tasks.ThreadUtils
 import com.kbcoding.core.model.tasks.dispatchers.MainThreadDispatcher
+import com.kbcoding.core.model.tasks.factories.ExecutorServiceTasksFactory
+import com.kbcoding.core.model.tasks.factories.HandlerThreadTasksFactory
+import com.kbcoding.core.model.tasks.factories.ThreadTasksFactory
 import com.kbcoding.core.presentation.BaseApplication
+import java.util.concurrent.Executors
 
 class App : Application(), BaseApplication {
 
-    private val tasksFactory = SimpleTasksFactory()
+    // instances of all created task factories
+    private val singleThreadExecutorTasksFactory = ExecutorServiceTasksFactory(Executors.newSingleThreadExecutor())
+    private val handlerThreadTasksFactory = HandlerThreadTasksFactory()
+    private val cachedThreadPoolExecutorTasksFactory = ExecutorServiceTasksFactory(Executors.newCachedThreadPool())
 
     private val threadUtils = ThreadUtils.Default()
     private val dispatcher = MainThreadDispatcher()
 
     /**
-     * Place your repositories here, now we have only 1 repository
+     * Place your singleton scope dependencies here
      */
     override val singletonScopeDependencies: List<Any> = listOf(
-        tasksFactory,
-        dispatcher,
+        cachedThreadPoolExecutorTasksFactory, // task factory to be used in view-models
+        dispatcher, // dispatcher to be used in view-models
 
-        InMemoryColorsRepository(tasksFactory, threadUtils)
+        InMemoryColorsRepository(cachedThreadPoolExecutorTasksFactory, threadUtils)
     )
 }

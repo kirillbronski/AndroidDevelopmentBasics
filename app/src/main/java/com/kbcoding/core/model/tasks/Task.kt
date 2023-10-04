@@ -5,7 +5,9 @@ import com.kbcoding.core.model.tasks.dispatchers.Dispatcher
 
 typealias TaskListener<T> = (FinalResult<T>) -> Unit
 
-class CancelledException : Exception()
+class CancelledException(
+    originException: Exception? = null
+) : Exception(originException)
 
 /**
  * Base interface for all async operations.

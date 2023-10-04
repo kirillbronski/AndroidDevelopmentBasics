@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.map
-import androidx.lifecycle.viewModelScope
 import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.model.colors.ColorsRepository
 import com.kbcoding.androiddevelopmentbasics.model.colors.NamedColor
@@ -13,7 +11,7 @@ import com.kbcoding.core.model.ErrorResult
 import com.kbcoding.core.model.FinalResult
 import com.kbcoding.core.model.PendingResult
 import com.kbcoding.core.model.SuccessResult
-import com.kbcoding.core.model.tasks.TasksFactory
+import com.kbcoding.core.model.tasks.factories.TasksFactory
 import com.kbcoding.core.model.tasks.dispatchers.Dispatcher
 import com.kbcoding.core.navigator.Navigator
 import com.kbcoding.core.presentation.BaseViewModel
@@ -21,8 +19,6 @@ import com.kbcoding.core.presentation.LiveResult
 import com.kbcoding.core.presentation.MediatorLiveResult
 import com.kbcoding.core.presentation.MutableLiveResult
 import com.kbcoding.core.uiActions.UiActions
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class ChangeColorViewModel(
     screen: ChangeColorFragment.Screen,

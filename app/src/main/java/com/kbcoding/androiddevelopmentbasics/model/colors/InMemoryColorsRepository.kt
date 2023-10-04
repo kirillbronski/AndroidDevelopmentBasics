@@ -2,7 +2,7 @@ package com.kbcoding.androiddevelopmentbasics.model.colors
 
 import android.graphics.Color
 import com.kbcoding.core.model.tasks.Task
-import com.kbcoding.core.model.tasks.TasksFactory
+import com.kbcoding.core.model.tasks.factories.TasksFactory
 import com.kbcoding.core.model.tasks.ThreadUtils
 
 class InMemoryColorsRepository(

@@ -29,8 +29,7 @@ open class BaseViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        tasks.forEach { it.cancel() }
-        tasks.clear()
+        clearTasks()
     }
 
     /**
@@ -39,6 +38,10 @@ open class BaseViewModel(
      */
     open fun onResult(result: Any) {
 
+    }
+
+    fun onBackPressed() {
+        clearTasks()
     }
 
     /**
@@ -65,5 +68,9 @@ open class BaseViewModel(
         }
     }
 
+    private fun clearTasks() {
+        tasks.forEach { it.cancel() }
+        tasks.clear()
+    }
 
 }
