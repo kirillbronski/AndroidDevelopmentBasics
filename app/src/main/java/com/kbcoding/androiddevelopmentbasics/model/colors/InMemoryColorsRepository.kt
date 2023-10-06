@@ -5,6 +5,9 @@ import com.kbcoding.core.model.tasks.Task
 import com.kbcoding.core.model.tasks.factories.TasksFactory
 import com.kbcoding.core.model.tasks.ThreadUtils
 
+/**
+ * Simple in-memory implementation of [ColorsRepository]
+ */
 class InMemoryColorsRepository(
     private val tasksFactory: TasksFactory,
     private val threadUtils: ThreadUtils

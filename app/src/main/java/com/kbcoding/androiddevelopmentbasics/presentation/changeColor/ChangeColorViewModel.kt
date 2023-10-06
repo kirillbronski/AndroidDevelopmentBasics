@@ -11,19 +11,21 @@ import com.kbcoding.core.model.ErrorResult
 import com.kbcoding.core.model.FinalResult
 import com.kbcoding.core.model.PendingResult
 import com.kbcoding.core.model.SuccessResult
-import com.kbcoding.core.model.tasks.factories.TasksFactory
 import com.kbcoding.core.model.tasks.dispatchers.Dispatcher
-import com.kbcoding.core.navigator.Navigator
+import com.kbcoding.core.model.tasks.factories.TasksFactory
 import com.kbcoding.core.presentation.BaseViewModel
 import com.kbcoding.core.presentation.LiveResult
 import com.kbcoding.core.presentation.MediatorLiveResult
 import com.kbcoding.core.presentation.MutableLiveResult
-import com.kbcoding.core.uiActions.UiActions
+import com.kbcoding.core.sideEffects.navigator.Navigator
+import com.kbcoding.core.sideEffects.resources.Resources
+import com.kbcoding.core.sideEffects.toasts.Toasts
 
 class ChangeColorViewModel(
     screen: ChangeColorFragment.Screen,
     private val navigator: Navigator,
-    private val uiActions: UiActions,
+    private val toasts: Toasts,
+    private val resources: Resources,
     private val colorsRepository: ColorsRepository,
     private val tasksFactory: TasksFactory,
     savedStateHandle: SavedStateHandle,
@@ -32,7 +34,8 @@ class ChangeColorViewModel(
 
     // input sources
     private val _availableColors = MutableLiveResult<List<NamedColor>>(PendingResult())
-    private val _currentColorId = savedStateHandle.getLiveData("currentColorId", screen.currentColorId)
+    private val _currentColorId =
+        savedStateHandle.getLiveData("currentColorId", screen.currentColorId)
     private val _saveInProgress = MutableLiveData(false)
 
     // main destination (contains merged values from _availableColors & _currentColorId)
@@ -43,14 +46,15 @@ class ChangeColorViewModel(
         addSource(_viewState) { result ->
             value = if (result is SuccessResult) {
                 val currentColor = result.data.colorsList.first { it.selected }
-                uiActions.getString(R.string.change_color_screen_title, currentColor.namedColor.name)
+                resources.getString(
+                    R.string.change_color_screen_title,
+                    currentColor.namedColor.name
+                )
             } else {
-                uiActions.getString(R.string.change_color_screen_title_simple)
+                resources.getString(R.string.change_color_screen_title_simple)
             }
         }
     }
-
-    private var mockError = true
 
     init {
         load()
@@ -70,7 +74,8 @@ class ChangeColorViewModel(
 
         tasksFactory.async {
             // this code is launched asynchronously in other thread
-            val currentColorId = _currentColorId.value ?: throw IllegalStateException("Color ID should not be NULL")
+            val currentColorId =
+                _currentColorId.value ?: throw IllegalStateException("Color ID should not be NULL")
             val currentColor = colorsRepository.getById(currentColorId).await()
             colorsRepository.setCurrentColor(currentColor).await()
             return@async currentColor
@@ -120,7 +125,7 @@ class ChangeColorViewModel(
         _saveInProgress.value = false
         when (result) {
             is SuccessResult -> navigator.goBack(result.data)
-            is ErrorResult -> uiActions.toast(uiActions.getString(R.string.error_happened))
+            is ErrorResult -> toasts.toast(resources.getString(R.string.error_happened))
         }
     }
 
@@ -130,6 +135,5 @@ class ChangeColorViewModel(
         val showCancelButton: Boolean,
         val showSaveProgressBar: Boolean
     )
-
 
 }

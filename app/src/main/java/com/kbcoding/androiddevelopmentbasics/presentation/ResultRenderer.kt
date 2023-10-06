@@ -9,12 +9,15 @@ import com.kbcoding.androiddevelopmentbasics.databinding.PartResultBinding
 import com.kbcoding.core.model.Result
 import com.kbcoding.core.presentation.BaseFragment
 
-fun <T> BaseFragment<*>.renderSimpleResult(
-    root: ViewGroup,
-    result: Result<T>,
-    onSuccess: (T) -> Unit
-) {
+/**
+ * Default [Result] rendering.
+ * - if [result] is [PendingResult] -> only progress-bar is displayed
+ * - if [result] is [ErrorResult] -> only error container is displayed
+ * - if [result] is [SuccessResult] -> error container & progress-bar is hidden, all other views are visible
+ */
+fun <T> BaseFragment<*>.renderSimpleResult(root: ViewGroup, result: Result<T>, onSuccess: (T) -> Unit) {
     val binding = PartResultBinding.bind(root)
+
     renderResult(
         root = root,
         result = result,
@@ -33,6 +36,9 @@ fun <T> BaseFragment<*>.renderSimpleResult(
     )
 }
 
-fun BaseFragment<*>.onTryAgain(root: ViewGroup, onTryAgainPressed: () -> Unit) {
+/**
+ * Assign onClick listener for default try-again button.
+ */
+fun BaseFragment<*>.onTryAgain(root: View, onTryAgainPressed: () -> Unit) {
     root.findViewById<Button>(R.id.tryAgainButton).setOnClickListener { onTryAgainPressed() }
 }

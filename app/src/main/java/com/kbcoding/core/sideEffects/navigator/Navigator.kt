@@ -1,9 +1,10 @@
-package com.kbcoding.core.navigator
+package com.kbcoding.core.sideEffects.navigator
 
 import com.kbcoding.core.presentation.BaseScreen
 
 /**
- * Navigation for your application
+ * Side-effects interface for doing navigation from view-models.
+ * You need to add [NavigatorPlugin] to your activity before using this feature.
  */
 interface Navigator {
 

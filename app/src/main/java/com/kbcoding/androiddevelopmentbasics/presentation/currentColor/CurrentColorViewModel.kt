@@ -1,5 +1,6 @@
 package com.kbcoding.androiddevelopmentbasics.presentation.currentColor
 
+import android.Manifest
 import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.model.colors.ColorListener
 import com.kbcoding.androiddevelopmentbasics.model.colors.ColorsRepository
@@ -9,15 +10,27 @@ import com.kbcoding.core.model.PendingResult
 import com.kbcoding.core.model.SuccessResult
 import com.kbcoding.core.model.takeSuccess
 import com.kbcoding.core.model.tasks.dispatchers.Dispatcher
-import com.kbcoding.core.navigator.Navigator
+import com.kbcoding.core.model.tasks.factories.TasksFactory
 import com.kbcoding.core.presentation.BaseViewModel
 import com.kbcoding.core.presentation.LiveResult
 import com.kbcoding.core.presentation.MutableLiveResult
-import com.kbcoding.core.uiActions.UiActions
+import com.kbcoding.core.sideEffects.dialogs.Dialogs
+import com.kbcoding.core.sideEffects.dialogs.plugin.DialogConfig
+import com.kbcoding.core.sideEffects.intents.Intents
+import com.kbcoding.core.sideEffects.navigator.Navigator
+import com.kbcoding.core.sideEffects.permissions.Permissions
+import com.kbcoding.core.sideEffects.permissions.plugin.PermissionStatus
+import com.kbcoding.core.sideEffects.resources.Resources
+import com.kbcoding.core.sideEffects.toasts.Toasts
 
 class CurrentColorViewModel(
     private val navigator: Navigator,
-    private val uiActions: UiActions,
+    private val toasts: Toasts,
+    private val resources: Resources,
+    private val permissions: Permissions,
+    private val intents: Intents,
+    private val dialogs: Dialogs,
+    private val tasksFactory: TasksFactory,
     private val colorsRepository: ColorsRepository,
     dispatcher: Dispatcher
 ) : BaseViewModel(dispatcher) {
@@ -46,8 +59,8 @@ class CurrentColorViewModel(
     override fun onResult(result: Any) {
         super.onResult(result)
         if (result is NamedColor) {
-            val message = uiActions.getString(R.string.changed_color, result.name)
-            uiActions.toast(message)
+            val message = resources.getString(R.string.changed_color, result.name)
+            toasts.toast(message)
         }
     }
 
@@ -59,6 +72,31 @@ class CurrentColorViewModel(
         navigator.launch(screen)
     }
 
+    /**
+     * Example of using side-effect plugins
+     */
+    fun requestPermission() = tasksFactory.async<Unit> {
+        val permission = Manifest.permission.ACCESS_FINE_LOCATION
+        val hasPermission = permissions.hasPermissions(permission)
+        if (hasPermission) {
+            dialogs.show(createPermissionAlreadyGrantedDialog()).await()
+        } else {
+            when (permissions.requestPermission(permission).await()) {
+                PermissionStatus.GRANTED -> {
+                    toasts.toast(resources.getString(R.string.permissions_grated))
+                }
+                PermissionStatus.DENIED -> {
+                    toasts.toast(resources.getString(R.string.permissions_denied))
+                }
+                PermissionStatus.DENIED_FOREVER -> {
+                    if (dialogs.show(createAskForLaunchingAppSettingsDialog()).await()) {
+                        intents.openAppSettings()
+                    }
+                }
+            }
+        }
+    }.safeEnqueue()
+
     fun tryAgain() {
         load()
     }
@@ -67,5 +105,16 @@ class CurrentColorViewModel(
         colorsRepository.getCurrentColor().into(_currentColor)
     }
 
+    private fun createPermissionAlreadyGrantedDialog() = DialogConfig(
+        title = resources.getString(R.string.dialog_permissions_title),
+        message = resources.getString(R.string.permissions_already_granted),
+        positiveButton = resources.getString(R.string.action_ok)
+    )
 
+    private fun createAskForLaunchingAppSettingsDialog() = DialogConfig(
+        title = resources.getString(R.string.dialog_permissions_title),
+        message = resources.getString(R.string.open_app_settings_message),
+        positiveButton = resources.getString(R.string.action_open),
+        negativeButton = resources.getString(R.string.action_cancel)
+    )
 }

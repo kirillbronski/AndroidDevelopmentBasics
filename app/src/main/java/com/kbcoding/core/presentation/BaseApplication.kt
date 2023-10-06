@@ -9,7 +9,8 @@ import com.kbcoding.core.model.Repository
 interface BaseApplication {
 
     /**
-     * The list of repositories that can be added to the fragment view-model constructors.
+     * The list of singleton scope dependencies that can be added to the fragment
+     * view-model constructors.
      */
     val singletonScopeDependencies: List<Any>
 

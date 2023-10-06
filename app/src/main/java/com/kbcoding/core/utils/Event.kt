@@ -1,5 +1,9 @@
 package com.kbcoding.core.utils
 
+/**
+ * Represents "side effect".
+ * Used in [LiveData] as a wrapper for events.
+ */
 class Event<T>(
     private val value: T
 ) {

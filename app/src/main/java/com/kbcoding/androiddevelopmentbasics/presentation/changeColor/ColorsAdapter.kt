@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kbcoding.androiddevelopmentbasics.databinding.ItemColorBinding
 import com.kbcoding.androiddevelopmentbasics.model.colors.NamedColor
 
+/**
+ * Adapter for displaying the list of available colors
+ * @param listener callback which notifies about user actions on items in the list, see [Listener] for details.
+ */
 class ColorsAdapter(
     private val listener: Listener
 ) : RecyclerView.Adapter<ColorsAdapter.Holder>(), View.OnClickListener {

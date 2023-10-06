@@ -5,7 +5,8 @@ import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
-import com.kbcoding.core.ARG_SCREEN
+import com.kbcoding.core.presentation.BaseScreen.Companion.ARG_SCREEN
+import com.kbcoding.core.presentation.activity.ActivityDelegateHolder
 import java.lang.reflect.Constructor
 
 /**
@@ -15,13 +16,13 @@ inline fun <reified VM : ViewModel> BaseFragment<*>.screenViewModel() = viewMode
     val application = requireActivity().application as BaseApplication
     val screen = requireArguments().getSerializable(ARG_SCREEN) as BaseScreen
 
-    val activityScopeViewModel = (requireActivity() as FragmentsHolder).getActivityScopeViewModel()
+    val activityScopeViewModel = (requireActivity() as ActivityDelegateHolder).delegate.getActivityScopeViewModel()
 
     // forming the list of available dependencies:
     // - singleton scope dependencies (repositories) -> from App class
     // - activity VM scope dependencies -> from ActivityScopeViewModel
     // - screen VM scope dependencies -> screen args
-    val dependencies = listOf(screen, activityScopeViewModel) + application.singletonScopeDependencies
+    val dependencies = listOf(screen) + activityScopeViewModel.sideEffectMediators + application.singletonScopeDependencies
 
     // creating factory
     ViewModelFactory(dependencies, this)

@@ -11,6 +11,7 @@ import com.kbcoding.core.model.ErrorResult
 import com.kbcoding.core.model.PendingResult
 import com.kbcoding.core.model.Result
 import com.kbcoding.core.model.SuccessResult
+import com.kbcoding.core.presentation.activity.ActivityDelegateHolder
 
 abstract class BaseFragment<Binding : ViewBinding> : Fragment() {
 
@@ -37,7 +38,7 @@ abstract class BaseFragment<Binding : ViewBinding> : Fragment() {
      * Call this method when activity controls (e.g. toolbar) should be re-rendered
      */
     fun notifyScreenUpdates() {
-        (requireActivity() as FragmentsHolder).notifyScreenUpdates()
+        (requireActivity() as ActivityDelegateHolder).delegate.notifyScreenUpdates()
     }
 
     abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): Binding

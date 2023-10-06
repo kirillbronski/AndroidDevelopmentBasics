@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.children
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentCurrentColorBinding
-import com.kbcoding.androiddevelopmentbasics.databinding.PartResultBinding
 import com.kbcoding.androiddevelopmentbasics.presentation.onTryAgain
 import com.kbcoding.androiddevelopmentbasics.presentation.renderSimpleResult
 import com.kbcoding.core.presentation.BaseFragment
@@ -47,6 +45,10 @@ class CurrentColorFragment : BaseFragment<FragmentCurrentColorBinding>() {
     private fun setupListeners() {
         binding.changeColorButton.setOnClickListener {
             viewModel.changeColor()
+        }
+
+        binding.askPermissionsButton.setOnClickListener {
+            viewModel.requestPermission()
         }
 
         onTryAgain(binding.root) {
