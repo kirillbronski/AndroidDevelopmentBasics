@@ -1,7 +1,7 @@
 package com.kbcoding.core.sideEffects
 
-import com.kbcoding.core.model.tasks.dispatchers.Dispatcher
-import com.kbcoding.core.model.tasks.dispatchers.MainThreadDispatcher
+import com.kbcoding.core.model.dispatchers.Dispatcher
+import com.kbcoding.core.model.dispatchers.MainThreadDispatcher
 import com.kbcoding.core.utils.ResourceActions
 
 /**

@@ -10,7 +10,7 @@ import com.kbcoding.androiddevelopmentbasics.presentation.changeColor.ChangeColo
 import com.kbcoding.core.model.PendingResult
 import com.kbcoding.core.model.SuccessResult
 import com.kbcoding.core.model.takeSuccess
-import com.kbcoding.core.model.tasks.dispatchers.Dispatcher
+import com.kbcoding.core.model.dispatchers.Dispatcher
 import com.kbcoding.core.model.tasks.factories.TasksFactory
 import com.kbcoding.core.presentation.BaseViewModel
 import com.kbcoding.core.presentation.LiveResult

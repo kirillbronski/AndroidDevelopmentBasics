@@ -1,4 +1,4 @@
-package com.kbcoding.core.model.tasks.dispatchers
+package com.kbcoding.core.model.dispatchers
 
 import android.os.Handler
 import android.os.Looper

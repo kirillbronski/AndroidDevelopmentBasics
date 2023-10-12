@@ -1,9 +1,8 @@
 package com.kbcoding.core.sideEffects.dialogs.plugin
 
 import com.kbcoding.core.model.ErrorResult
-import com.kbcoding.core.model.tasks.Task
 import com.kbcoding.core.model.tasks.callback.CallbackTask
-import com.kbcoding.core.model.tasks.callback.Emitter
+import com.kbcoding.core.model.Emitter
 import com.kbcoding.core.sideEffects.SideEffectMediator
 import com.kbcoding.core.sideEffects.dialogs.Dialogs
 

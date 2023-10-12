@@ -3,7 +3,7 @@ package com.kbcoding.androiddevelopmentbasics
 import android.app.Application
 import com.kbcoding.androiddevelopmentbasics.model.colors.InMemoryColorsRepository
 import com.kbcoding.core.model.tasks.ThreadUtils
-import com.kbcoding.core.model.tasks.dispatchers.MainThreadDispatcher
+import com.kbcoding.core.model.dispatchers.MainThreadDispatcher
 import com.kbcoding.core.model.tasks.factories.ExecutorServiceTasksFactory
 import com.kbcoding.core.model.tasks.factories.HandlerThreadTasksFactory
 import com.kbcoding.core.model.tasks.factories.ThreadTasksFactory

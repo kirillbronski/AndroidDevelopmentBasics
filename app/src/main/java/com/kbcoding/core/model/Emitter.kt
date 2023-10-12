@@ -1,10 +1,6 @@
-package com.kbcoding.core.model.tasks.callback
-
-import com.kbcoding.core.model.FinalResult
+package com.kbcoding.core.model
 
 typealias CancelListener = () -> Unit
-
-typealias ExecutionListener<T> = (Emitter<T>) -> Unit
 
 /**
  * Emitter instance is passed to [CallbackTask.create] as an argument so you can use it

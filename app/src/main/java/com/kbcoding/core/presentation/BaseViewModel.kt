@@ -9,7 +9,7 @@ import com.kbcoding.core.model.ErrorResult
 import com.kbcoding.core.model.Result
 import com.kbcoding.core.model.SuccessResult
 import com.kbcoding.core.model.tasks.Task
-import com.kbcoding.core.model.tasks.dispatchers.Dispatcher
+import com.kbcoding.core.model.dispatchers.Dispatcher
 import com.kbcoding.core.utils.Event
 import kotlinx.coroutines.launch
 

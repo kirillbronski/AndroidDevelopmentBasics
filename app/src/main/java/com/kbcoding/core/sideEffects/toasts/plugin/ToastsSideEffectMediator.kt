@@ -2,7 +2,7 @@ package com.kbcoding.core.sideEffects.toasts.plugin
 
 import android.content.Context
 import android.widget.Toast
-import com.kbcoding.core.model.tasks.dispatchers.MainThreadDispatcher
+import com.kbcoding.core.model.dispatchers.MainThreadDispatcher
 import com.kbcoding.core.sideEffects.SideEffectMediator
 import com.kbcoding.core.sideEffects.toasts.Toasts
 

@@ -1,6 +1,6 @@
 package com.kbcoding.core.utils
 
-import com.kbcoding.core.model.tasks.dispatchers.Dispatcher
+import com.kbcoding.core.model.dispatchers.Dispatcher
 
 typealias ResourceAction<T> = (T) -> Unit
 
