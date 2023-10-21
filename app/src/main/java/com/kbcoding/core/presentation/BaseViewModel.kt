@@ -4,13 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.kbcoding.core.model.ErrorResult
 import com.kbcoding.core.model.Result
 import com.kbcoding.core.model.SuccessResult
-import com.kbcoding.core.model.tasks.Task
-import com.kbcoding.core.model.dispatchers.Dispatcher
 import com.kbcoding.core.utils.Event
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 typealias LiveEvent<T> = LiveData<Event<T>>
@@ -25,11 +26,12 @@ typealias MediatorLiveResult<T> = MediatorLiveData<Result<T>>
  */
 open class BaseViewModel : ViewModel() {
 
-    private val tasks = mutableSetOf<Task<*>>()
+    private val coroutineContext = SupervisorJob() + Dispatchers.Main.immediate
+    protected val viewModelScope: CoroutineScope = CoroutineScope(coroutineContext)
 
     override fun onCleared() {
         super.onCleared()
-        clearTasks()
+        clearViewModelScope()
     }
 
     /**
@@ -45,7 +47,7 @@ open class BaseViewModel : ViewModel() {
      * Return `true` if you want to abort closing this screen
      */
     open fun onBackPressed(): Boolean {
-        clearTasks()
+        clearViewModelScope()
         return false
     }
 
@@ -65,9 +67,8 @@ open class BaseViewModel : ViewModel() {
         }
     }
 
-    private fun clearTasks() {
-        tasks.forEach { it.cancel() }
-        tasks.clear()
+    private fun clearViewModelScope() {
+        viewModelScope.cancel()
     }
 
 }

@@ -1,7 +1,6 @@
 package com.kbcoding.androiddevelopmentbasics.model.colors
 
 import com.kbcoding.core.model.Repository
-import com.kbcoding.core.model.tasks.Task
 
 typealias ColorListener = (NamedColor) -> Unit
 

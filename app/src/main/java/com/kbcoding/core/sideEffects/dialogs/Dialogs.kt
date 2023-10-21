@@ -1,6 +1,5 @@
 package com.kbcoding.core.sideEffects.dialogs
 
-import com.kbcoding.core.model.tasks.Task
 import com.kbcoding.core.sideEffects.dialogs.plugin.DialogConfig
 
 /**

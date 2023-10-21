@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import com.kbcoding.core.model.ErrorResult
 import com.kbcoding.core.model.Emitter
+import com.kbcoding.core.model.toEmitter
 import com.kbcoding.core.sideEffects.SideEffectMediator
 import com.kbcoding.core.sideEffects.permissions.Permissions
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -20,9 +21,10 @@ class PermissionsSideEffectMediator(
     }
 
     override suspend fun requestPermission(permission: String): PermissionStatus = suspendCancellableCoroutine { continuation ->
+        val emitter = continuation.toEmitter()
         if (retainedState.emitter != null) {
             emitter.emit(ErrorResult(IllegalStateException("Only one permission request can be active")))
-            return@create
+            return@suspendCancellableCoroutine
         }
         retainedState.emitter = emitter
         target { implementation ->
