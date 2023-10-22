@@ -1,6 +1,7 @@
 package com.kbcoding.androiddevelopmentbasics.model.colors
 
 import com.kbcoding.core.model.Repository
+import kotlinx.coroutines.flow.Flow
 
 typealias ColorListener = (NamedColor) -> Unit
 
@@ -29,17 +30,8 @@ interface ColorsRepository : Repository {
     /**
      * Set the specified color as current.
      */
-    suspend fun setCurrentColor(color: NamedColor)
+    fun setCurrentColor(color: NamedColor): Flow<Int>
 
-    /**
-     * Listen for the current color changes.
-     * The listener is triggered immediately with the current value when calling this method.
-     */
-    fun addListener(listener: ColorListener)
-
-    /**
-     * Stop listening for the current color changes
-     */
-    fun removeListener(listener: ColorListener)
+    fun listenCurrentColor(): Flow<NamedColor>
 
 }

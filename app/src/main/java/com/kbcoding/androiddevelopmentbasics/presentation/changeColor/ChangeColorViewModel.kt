@@ -1,23 +1,26 @@
 package com.kbcoding.androiddevelopmentbasics.presentation.changeColor
 
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.asLiveData
 import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.model.colors.ColorsRepository
 import com.kbcoding.androiddevelopmentbasics.model.colors.NamedColor
 import com.kbcoding.core.model.PendingResult
+import com.kbcoding.core.model.Result
 import com.kbcoding.core.model.SuccessResult
 import com.kbcoding.core.presentation.BaseViewModel
-import com.kbcoding.core.presentation.LiveResult
-import com.kbcoding.core.presentation.MediatorLiveResult
-import com.kbcoding.core.presentation.MutableLiveResult
 import com.kbcoding.core.sideEffects.navigator.Navigator
 import com.kbcoding.core.sideEffects.resources.Resources
 import com.kbcoding.core.sideEffects.toasts.Toasts
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class ChangeColorViewModel(
@@ -30,18 +33,22 @@ class ChangeColorViewModel(
 ) : BaseViewModel(), ColorsAdapter.Listener {
 
     // input sources
-    private val _availableColors = MutableLiveResult<List<NamedColor>>(PendingResult())
+    private val _availableColors = MutableStateFlow<Result<List<NamedColor>>>(PendingResult())
     private val _currentColorId =
-        savedStateHandle.getLiveData("currentColorId", screen.currentColorId)
-    private val _saveInProgress = MutableLiveData(false)
+        savedStateHandle.getStateFlowExt("currentColorId", screen.currentColorId)
+    private val _saveInProgress = MutableStateFlow(false)
 
     // main destination (contains merged values from _availableColors & _currentColorId)
-    private val _viewState = MediatorLiveResult<ViewState>()
-    val viewState: LiveResult<ViewState> = _viewState
+    val viewState: Flow<Result<ViewState>> = combine(
+        _availableColors,
+        _currentColorId,
+        _saveInProgress,
+        ::mergeSources
+    )
 
-    val screenTitle: LiveData<String> = MediatorLiveData<String>().apply {
-        addSource(_viewState) { result ->
-            value = if (result is SuccessResult) {
+    val screenTitle: LiveData<String> = viewState
+        .map { result ->
+            return@map if (result is SuccessResult) {
                 val currentColor = result.data.colorsList.first { it.selected }
                 resources.getString(
                     R.string.change_color_screen_title,
@@ -51,14 +58,10 @@ class ChangeColorViewModel(
                 resources.getString(R.string.change_color_screen_title_simple)
             }
         }
-    }
+        .asLiveData()
 
     init {
         load()
-        // initializing MediatorLiveData
-        _viewState.addSource(_availableColors) { mergeSources() }
-        _viewState.addSource(_currentColorId) { mergeSources() }
-        _viewState.addSource(_saveInProgress) { mergeSources() }
     }
 
     override fun onColorChosen(namedColor: NamedColor) {
@@ -68,12 +71,12 @@ class ChangeColorViewModel(
 
     fun onSavePressed() = viewModelScope.launch {
         try {
-            _saveInProgress.postValue(true)
+            _saveInProgress.value = true
 
             val currentColorId =
                 _currentColorId.value ?: throw IllegalStateException("Color ID should not be NULL")
             val currentColor = colorsRepository.getById(currentColorId)
-            colorsRepository.setCurrentColor(currentColor)
+            colorsRepository.setCurrentColor(currentColor).collect()
 
             navigator.goBack(currentColor)
         } catch (e: Exception) {
@@ -99,13 +102,13 @@ class ChangeColorViewModel(
      * ([_currentColorId] live-data) + whether save is in progress or not, then we use all of
      * these values in order to create a [ViewState] instance, which is in its turn rendered by fragment.
      */
-    private fun mergeSources() {
-        val colors = _availableColors.value ?: return
-        val currentColorId = _currentColorId.value ?: return
-        val saveInProgress = _saveInProgress.value ?: return
-
+    private fun mergeSources(
+        colors: Result<List<NamedColor>>,
+        currentColorId: Long,
+        saveInProgress: Boolean
+    ): Result<ViewState> {
         // map Result<List<NamedColor>> to Result<ViewState>
-        _viewState.value = colors.map { colorsList ->
+        return colors.map { colorsList ->
             ViewState(
                 // map List<NamedColor> to List<NamedColorListItem>
                 colorsList = colorsList.map { NamedColorListItem(it, currentColorId == it.id) },
