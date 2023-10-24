@@ -24,6 +24,7 @@ typealias MutableLiveEvent<T> = MutableLiveData<Event<T>>
 typealias LiveResult<T> = LiveData<Result<T>>
 typealias MutableLiveResult<T> = MutableLiveData<Result<T>>
 typealias MediatorLiveResult<T> = MediatorLiveData<Result<T>>
+typealias ResultMutableStateFlow<T> = MutableStateFlow<Result<T>>
 
 /**
  * Base class for all view-models.
