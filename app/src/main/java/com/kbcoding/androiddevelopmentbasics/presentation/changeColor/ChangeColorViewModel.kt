@@ -22,7 +22,6 @@ import com.kbcoding.core.sideEffects.toasts.Toasts
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -83,7 +82,10 @@ class ChangeColorViewModel(
             val currentColorId =
                 _currentColorId.value ?: throw IllegalStateException("Color ID should not be NULL")
             val currentColor = colorsRepository.getById(currentColorId)
-            colorsRepository.setCurrentColor(currentColor).collect()
+            colorsRepository.setCurrentColor(currentColor).collect { percentage ->
+                _saveInProgress.value = Progress.PercentageProgress(percentage)
+
+            }
 
             navigator.goBack(currentColor)
         } catch (e: Exception) {
