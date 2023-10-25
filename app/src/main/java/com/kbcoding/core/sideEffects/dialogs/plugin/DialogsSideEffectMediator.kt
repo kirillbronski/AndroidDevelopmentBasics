@@ -1,9 +1,9 @@
 package com.kbcoding.core.sideEffects.dialogs.plugin
 
-import com.kbcoding.core.model.Emitter
+import com.kbcoding.core.model.coroutines.Emitter
 import com.kbcoding.core.model.ErrorResult
-import com.kbcoding.core.model.toEmitter
 import com.kbcoding.core.sideEffects.SideEffectMediator
+import com.kbcoding.core.model.coroutines.toEmitter
 import com.kbcoding.core.sideEffects.dialogs.Dialogs
 import kotlinx.coroutines.suspendCancellableCoroutine
 

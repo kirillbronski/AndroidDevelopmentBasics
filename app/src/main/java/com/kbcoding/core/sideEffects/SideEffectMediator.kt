@@ -1,8 +1,8 @@
 package com.kbcoding.core.sideEffects
 
-import com.kbcoding.core.model.dispatchers.Dispatcher
-import com.kbcoding.core.model.dispatchers.MainThreadDispatcher
+import com.kbcoding.core.utils.MainThreadExecutor
 import com.kbcoding.core.utils.ResourceActions
+import java.util.concurrent.Executor
 
 /**
  * Base class for all side-effect mediators.
@@ -10,13 +10,13 @@ import com.kbcoding.core.utils.ResourceActions
  * Mediator should delegate all UI-related logic to the implementations via [target] field.
  */
 open class SideEffectMediator<Implementation>(
-    dispatcher: Dispatcher = MainThreadDispatcher()
+    executor: Executor = MainThreadExecutor()
 ) {
 
-    protected val target = ResourceActions<Implementation>(dispatcher)
+    protected val target = ResourceActions<Implementation>(executor)
 
     /**
-     * Assign/unassign the target implementation for this provder.
+     * Assign/unassign the target implementation for this mediator.
      */
     fun setTarget(target: Implementation?) {
         this.target.resource = target

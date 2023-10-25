@@ -18,7 +18,11 @@ class IntentsSideEffectMediator(
             Uri.fromParts("package", appContext.packageName, null)
         )
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        if (appContext.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+        if (appContext.packageManager.resolveActivity(
+                intent,
+                PackageManager.MATCH_DEFAULT_ONLY
+            ) != null
+        ) {
             appContext.startActivity(intent)
         }
     }

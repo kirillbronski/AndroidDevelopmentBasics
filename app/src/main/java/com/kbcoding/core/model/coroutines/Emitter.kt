@@ -1,21 +1,21 @@
-package com.kbcoding.core.model
+package com.kbcoding.core.model.coroutines
+
+import com.kbcoding.core.model.FinalResult
 
 typealias CancelListener = () -> Unit
 
 /**
- * Emitter instance is passed to [CallbackTask.create] as an argument so you can use it
- * for converting callbacks into [Task].
+ * Simpler interface for using instead of [CancellableContinuation]
  */
 interface Emitter<T> {
 
     /**
-     * Finish the associated task with the specified result.
+     * Finish the associated coroutine with the specified result.
      */
     fun emit(finalResult: FinalResult<T>)
 
     /**
-     * Assign optional cancel listener. This listener is executed when the associated task
-     * has been cancelled by [Task.cancel] call.
+     * Assign optional cancel listener.
      */
     fun setCancelListener(cancelListener: CancelListener)
 

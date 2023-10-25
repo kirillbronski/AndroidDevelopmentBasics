@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import com.kbcoding.core.model.ErrorResult
-import com.kbcoding.core.model.Emitter
-import com.kbcoding.core.model.toEmitter
+import com.kbcoding.core.model.coroutines.Emitter
+import com.kbcoding.core.model.coroutines.toEmitter
 import com.kbcoding.core.sideEffects.SideEffectMediator
 import com.kbcoding.core.sideEffects.permissions.Permissions
 import kotlinx.coroutines.suspendCancellableCoroutine
