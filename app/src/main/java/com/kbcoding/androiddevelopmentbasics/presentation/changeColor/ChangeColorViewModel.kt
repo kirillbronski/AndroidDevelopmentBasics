@@ -19,6 +19,7 @@ import com.kbcoding.core.presentation.ResultMutableStateFlow
 import com.kbcoding.core.sideEffects.navigator.Navigator
 import com.kbcoding.core.sideEffects.resources.Resources
 import com.kbcoding.core.sideEffects.toasts.Toasts
+import com.kbcoding.core.utils.finiteShareIn
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.async
@@ -94,8 +95,7 @@ class ChangeColorViewModel(
             val currentColor = colorsRepository.getById(currentColorId)
 
             val flow = colorsRepository.setCurrentColor(currentColor)
-                .shareIn(this, started = SharingStarted.Eagerly, replay = 1)
-                .takeWhile { it < 100 }
+                .finiteShareIn(this)
 
             val instantJob = async {
                 flow.collect { percentage ->
