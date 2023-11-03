@@ -41,14 +41,14 @@ android {
 dependencies {
 
     // Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.4")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
 
-    implementation ("androidx.fragment:fragment-ktx:1.6.1")
-    implementation ("androidx.activity:activity-ktx:1.8.0")
-    //implementation ("androidx.recyclerview:recyclerview:1.3.1")
     implementation("com.github.javafaker:javafaker:1.0.2")
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    implementation ("androidx.fragment:fragment-ktx:1.6.2")
+    implementation ("androidx.activity:activity-ktx:1.8.0")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
