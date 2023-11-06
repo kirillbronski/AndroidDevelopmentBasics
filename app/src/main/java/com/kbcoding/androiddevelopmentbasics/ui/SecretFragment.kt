@@ -1,7 +1,7 @@
 package com.kbcoding.androiddevelopmentbasics.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,4 +16,20 @@ class SecretFragment : BaseFragment<FragmentSecretBinding>() {
     ): FragmentSecretBinding {
         return FragmentSecretBinding.inflate(inflater, container, false)
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.closeBoxButton.setOnClickListener {
+            popBackStack(destinationId = R.id.rootFragment, isInclusive = false)
+        }
+        binding.goBackButton.setOnClickListener {
+            popBackStack()
+        }
+    }
+
+    companion object {
+        val TAG = SecretFragment::class.java.simpleName
+    }
+
 }
