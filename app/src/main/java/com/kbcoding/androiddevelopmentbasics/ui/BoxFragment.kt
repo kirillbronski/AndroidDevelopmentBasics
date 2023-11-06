@@ -44,6 +44,7 @@ class BoxFragment : BaseFragment<FragmentBoxBinding>() {
     companion object {
         val TAG = BoxFragment::class.java.simpleName
         const val ARG_COLOR = "color"
+        const val ARG_COLOR_NAME = "colorName"
 
         const val REQUEST_CODE = "RANDOM_NUMBER_REQUEST_CODE"
         const val EXTRA_RANDOM_NUMBER = "EXTRA_RANDOM_NUMBER"
