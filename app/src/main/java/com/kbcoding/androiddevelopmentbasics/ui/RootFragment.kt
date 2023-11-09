@@ -2,19 +2,14 @@ package com.kbcoding.androiddevelopmentbasics.ui
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.kbcoding.androiddevelopmentbasics.BaseFragment
-import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentRootBinding
-import com.kbcoding.androiddevelopmentbasics.ui.BoxFragment.Companion.ARG_COLOR
-import com.kbcoding.androiddevelopmentbasics.ui.BoxFragment.Companion.ARG_COLOR_NAME
 import com.kbcoding.androiddevelopmentbasics.ui.BoxFragment.Companion.EXTRA_RANDOM_NUMBER
-import com.kbcoding.androiddevelopmentbasics.ui.BoxFragment.Companion.REQUEST_CODE
 
 class RootFragment : BaseFragment<FragmentRootBinding>() {
 
@@ -36,13 +31,17 @@ class RootFragment : BaseFragment<FragmentRootBinding>() {
             openBox(Color.rgb(255, 255, 200), "Yellow")
         }
 
-        parentFragmentManager.setFragmentResultListener(REQUEST_CODE, viewLifecycleOwner){_, data ->
-            val number = data.getInt(EXTRA_RANDOM_NUMBER)
-            Toast.makeText(requireContext(), "Generated number: $number", Toast.LENGTH_SHORT).show()
+        val liveData = findNavController()
+            .currentBackStackEntry?.savedStateHandle?.getLiveData<Int>(EXTRA_RANDOM_NUMBER)
+        liveData?.observe(viewLifecycleOwner) {
+            if (it != null) {
+                Toast.makeText(requireContext(), "Generated number: $it", Toast.LENGTH_SHORT).show()
+            }
+            liveData.value = null
         }
     }
 
     private fun openBox(color: Int, colorName: String) {
-        navigateTo(R.id.action_rootFragment_to_boxFragment, bundleOf(ARG_COLOR to color, ARG_COLOR_NAME to colorName))
+        navigateTo(RootFragmentDirections.actionRootFragmentToBoxFragment(colorName, color))
     }
 }

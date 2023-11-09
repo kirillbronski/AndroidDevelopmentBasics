@@ -6,12 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.navigation.NavArgs
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.kbcoding.androiddevelopmentbasics.BaseFragment
 import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentBoxBinding
 import kotlin.random.Random
 
 class BoxFragment : BaseFragment<FragmentBoxBinding>() {
+
+    private val args: BoxFragmentArgs by navArgs()
     override fun createBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -22,31 +27,25 @@ class BoxFragment : BaseFragment<FragmentBoxBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val color = requireArguments().getInt(ARG_COLOR)
+        val color = args.color
         binding.root.setBackgroundColor(color)
 
         binding.goBackButton.setOnClickListener {
             popBackStack()
         }
         binding.openSecretButton.setOnClickListener {
-            navigateTo(R.id.action_boxFragment_to_secretFragment)
+            navigateTo(BoxFragmentDirections.actionBoxFragmentToSecretFragment())
         }
         binding.generateNumberButton.setOnClickListener {
             val number = Random.nextInt(until = 100)
-            parentFragmentManager.setFragmentResult(
-                REQUEST_CODE,
-                bundleOf(EXTRA_RANDOM_NUMBER to number)
-            )
+            findNavController().previousBackStackEntry?.savedStateHandle?.set(EXTRA_RANDOM_NUMBER, number)
             popBackStack()
         }
     }
 
     companion object {
         val TAG = BoxFragment::class.java.simpleName
-        const val ARG_COLOR = "color"
-        const val ARG_COLOR_NAME = "colorName"
 
-        const val REQUEST_CODE = "RANDOM_NUMBER_REQUEST_CODE"
         const val EXTRA_RANDOM_NUMBER = "EXTRA_RANDOM_NUMBER"
     }
 }

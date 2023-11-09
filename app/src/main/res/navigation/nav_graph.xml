@@ -25,6 +25,9 @@
         <argument
             android:name="colorName"
             app:argType="string" />
+        <argument
+            android:name="color"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/secretFragment"
