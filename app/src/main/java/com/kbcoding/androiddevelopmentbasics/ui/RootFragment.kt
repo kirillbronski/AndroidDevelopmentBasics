@@ -12,6 +12,7 @@ import com.kbcoding.androiddevelopmentbasics.BaseFragment
 import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentRootBinding
 import com.kbcoding.androiddevelopmentbasics.ui.BoxFragment.Companion.ARG_COLOR
+import com.kbcoding.androiddevelopmentbasics.ui.BoxFragment.Companion.ARG_COLOR_NAME
 import com.kbcoding.androiddevelopmentbasics.ui.BoxFragment.Companion.EXTRA_RANDOM_NUMBER
 import com.kbcoding.androiddevelopmentbasics.ui.BoxFragment.Companion.REQUEST_CODE
 
@@ -28,11 +29,11 @@ class RootFragment : BaseFragment<FragmentRootBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnOpenGreenBox.setOnClickListener {
-            openBox(Color.rgb(200, 255, 200))
+            openBox(Color.rgb(200, 255, 200), "Green")
         }
 
         binding.btnOpenYellowBox.setOnClickListener {
-            openBox(Color.rgb(255, 255, 200))
+            openBox(Color.rgb(255, 255, 200), "Yellow")
         }
 
         parentFragmentManager.setFragmentResultListener(REQUEST_CODE, viewLifecycleOwner){_, data ->
@@ -41,7 +42,7 @@ class RootFragment : BaseFragment<FragmentRootBinding>() {
         }
     }
 
-    private fun openBox(color: Int) {
-        navigateTo(R.id.action_rootFragment_to_boxFragment, bundleOf(ARG_COLOR to color))
+    private fun openBox(color: Int, colorName: String) {
+        navigateTo(R.id.action_rootFragment_to_boxFragment, bundleOf(ARG_COLOR to color, ARG_COLOR_NAME to colorName))
     }
 }
