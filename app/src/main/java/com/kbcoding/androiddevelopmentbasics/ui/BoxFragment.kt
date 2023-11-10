@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.kbcoding.androiddevelopmentbasics.BaseFragment
 import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentBoxBinding
+import com.kbcoding.androiddevelopmentbasics.publishResults
 import kotlin.random.Random
 
 class BoxFragment : BaseFragment<FragmentBoxBinding>() {
@@ -38,7 +39,8 @@ class BoxFragment : BaseFragment<FragmentBoxBinding>() {
         }
         binding.generateNumberButton.setOnClickListener {
             val number = Random.nextInt(until = 100)
-            findNavController().previousBackStackEntry?.savedStateHandle?.set(EXTRA_RANDOM_NUMBER, number)
+            //findNavController().previousBackStackEntry?.savedStateHandle?.set(EXTRA_RANDOM_NUMBER, number)
+            publishResults(EXTRA_RANDOM_NUMBER, number)
             popBackStack()
         }
     }

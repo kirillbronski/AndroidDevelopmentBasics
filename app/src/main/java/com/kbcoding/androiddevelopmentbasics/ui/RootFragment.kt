@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.kbcoding.androiddevelopmentbasics.BaseFragment
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentRootBinding
+import com.kbcoding.androiddevelopmentbasics.listenResults
 import com.kbcoding.androiddevelopmentbasics.ui.BoxFragment.Companion.EXTRA_RANDOM_NUMBER
 
 class RootFragment : BaseFragment<FragmentRootBinding>() {
@@ -31,14 +32,17 @@ class RootFragment : BaseFragment<FragmentRootBinding>() {
             openBox(Color.rgb(255, 255, 200), "Yellow")
         }
 
-        val liveData = findNavController()
-            .currentBackStackEntry?.savedStateHandle?.getLiveData<Int>(EXTRA_RANDOM_NUMBER)
-        liveData?.observe(viewLifecycleOwner) {
-            if (it != null) {
-                Toast.makeText(requireContext(), "Generated number: $it", Toast.LENGTH_SHORT).show()
-            }
-            liveData.value = null
+        listenResults<Int>(EXTRA_RANDOM_NUMBER) {
+            Toast.makeText(requireContext(), "Generated number: $it", Toast.LENGTH_SHORT).show()
         }
+//        val liveData = findNavController()
+//            .currentBackStackEntry?.savedStateHandle?.getLiveData<Int>(EXTRA_RANDOM_NUMBER)
+//        liveData?.observe(viewLifecycleOwner) {
+//            if (it != null) {
+//                Toast.makeText(requireContext(), "Generated number: $it", Toast.LENGTH_SHORT).show()
+//            }
+//            liveData.value = null
+//        }
     }
 
     private fun openBox(color: Int, colorName: String) {
