@@ -39,7 +39,7 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>() {
     }
 
     private fun listenResultByNavigator() {
-        navigator().listenResult(Options::class.java, viewLifecycleOwner) {
+        navigator().listenResult<Options>(viewLifecycleOwner) {
             this.options = it
         }
     }

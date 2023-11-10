@@ -17,7 +17,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentResultListener
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.kbcoding.androiddevelopmentbasics.contract.CustomAction
 import com.kbcoding.androiddevelopmentbasics.contract.HasCustomAction
@@ -104,26 +106,21 @@ class MainActivity : AppCompatActivity(), Navigator {
     }
 
     override fun <T : Serializable> publishResult(result: T) {
-        supportFragmentManager.setFragmentResult(
-            result.javaClass.name,
-            bundleOf(KEY_RESULT to result)
-        )
+        navController.previousBackStackEntry?.savedStateHandle?.set(KEY_RESULT, result)
     }
 
 
     override fun <T : Serializable> listenResult(
-        clazz: Class<T>, owner: LifecycleOwner, listener: ResultListener<T>
+        owner: LifecycleOwner, listener: ResultListener<T>
     ) {
-        supportFragmentManager.setFragmentResultListener(
-            clazz.name,
-            owner,
-            FragmentResultListener { key, bundle ->
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    listener.invoke(bundle.getSerializable(KEY_RESULT, clazz)!!)
-                } else {
-                    listener.invoke(bundle.getParcelable(KEY_RESULT)!!)
-                }
-            })
+        val liveData =
+            navController.currentBackStackEntry?.savedStateHandle?.getLiveData<T>(KEY_RESULT)
+        liveData?.observe(owner) { result ->
+            if (result != null) {
+                listener(result)
+                liveData.value = null
+            }
+        }
     }
 
     private fun launchDestination(destinationId: Int, args: Bundle? = null) {

@@ -27,7 +27,6 @@ interface Navigator {
 
     fun <T : Serializable> publishResult(result: T)
     fun <T : Serializable> listenResult(
-        clazz: Class<T>,
         owner: LifecycleOwner,
         listener: ResultListener<T>
     )
