@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.os.bundleOf
 import com.kbcoding.androiddevelopmentbasics.BoxCountItem
 import com.kbcoding.androiddevelopmentbasics.Options
 import com.kbcoding.androiddevelopmentbasics.R
@@ -127,19 +128,9 @@ class OptionsFragment : BaseFragment<FragmentOptionsBinding>(), HasCustomTitle, 
     }
 
     companion object {
-
-        @JvmStatic
         private val ARG_OPTIONS = "ARG_OPTIONS"
-
-        @JvmStatic
         private val KEY_OPTIONS = "KEY_OPTIONS"
 
-        @JvmStatic
-        fun newInstance(options: Options) =
-            OptionsFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(ARG_OPTIONS, options)
-                }
-            }
+        fun createArgs(options: Options) = bundleOf(ARG_OPTIONS to options)
     }
 }

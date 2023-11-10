@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import com.kbcoding.androiddevelopmentbasics.Options
 import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.contract.HasCustomTitle
@@ -171,23 +172,12 @@ class BoxSelectionFragment : BaseFragment<FragmentBoxSelectionBinding>(), HasCus
 
 
     companion object {
-        @JvmStatic
         private val ARG_OPTIONS = "EXTRA_OPTIONS"
-        @JvmStatic
         private val KEY_INDEX = "KEY_INDEX"
-        @JvmStatic
         private val KEY_START_TIMESTAMP = "KEY_START_TIMESTAMP"
-        @JvmStatic
         private val KEY_ALREADY_DONE = "KEY_ALREADY_DONE"
-        @JvmStatic
         private val TIMER_DURATION = 10_000L
 
-        @JvmStatic
-        fun newInstance(options: Options) =
-            BoxSelectionFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(ARG_OPTIONS, options)
-                }
-            }
+        fun createArgs(options: Options) = bundleOf(ARG_OPTIONS to options)
     }
 }

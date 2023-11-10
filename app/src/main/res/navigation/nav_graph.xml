@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/menuFragment">
+
+
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.kbcoding.androiddevelopmentbasics.fragments.MenuFragment"
+        android:label="Menu"
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_optionsFragment"
+            app:destination="@id/optionsFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_boxSelectionFragment"
+            app:destination="@id/boxSelectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/optionsFragment"
+        android:name="com.kbcoding.androiddevelopmentbasics.fragments.OptionsFragment"
+        android:label="Options"
+        tools:layout="@layout/fragment_options" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.kbcoding.androiddevelopmentbasics.fragments.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/boxSelectionFragment"
+        android:name="com.kbcoding.androiddevelopmentbasics.fragments.BoxSelectionFragment"
+        android:label="Box selection"
+        tools:layout="@layout/fragment_box_selection" >
+        <action
+            android:id="@+id/action_boxSelectionFragment_to_boxFragment"
+            app:destination="@id/boxFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/boxFragment"
+        android:name="com.kbcoding.androiddevelopmentbasics.fragments.BoxFragment"
+        android:label="Box"
+        tools:layout="@layout/fragment_box" />
+</navigation>
