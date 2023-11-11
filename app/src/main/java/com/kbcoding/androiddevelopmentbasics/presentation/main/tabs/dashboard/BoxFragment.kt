@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentBoxBinding
 import com.kbcoding.androiddevelopmentbasics.di.Repositories
@@ -13,13 +15,17 @@ import com.kbcoding.androiddevelopmentbasics.utils.viewModelCreator
 import com.kbcoding.core.BaseFragment
 
 class BoxFragment : BaseFragment<FragmentBoxBinding>() {
+
+    private val args by navArgs<BoxFragmentArgs>()
+
+    private val viewModel by viewModelCreator { BoxViewModel(getBoxId(), Repositories.boxesRepository) }
+
     override fun createBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentBoxBinding {
         return FragmentBoxBinding.inflate(inflater, container, false)
     }
-    private val viewModel by viewModelCreator { BoxViewModel(getBoxId(), Repositories.boxesRepository) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,26 +39,26 @@ class BoxFragment : BaseFragment<FragmentBoxBinding>() {
     }
 
     private fun onGoBackButtonPressed() {
-        TODO("Go back to the previous screen here")
+        findNavController().popBackStack()
     }
 
     private fun listenShouldExitEvent() = viewModel.shouldExitEvent.observeEvent(viewLifecycleOwner) { shouldExit ->
         if (shouldExit) {
             // close the screen if the box has been deactivated
-            TODO("Go back to the previous screen here")
+            findNavController().popBackStack()
         }
     }
 
     private fun getBoxId(): Int {
-        TODO("Extract box id from arguments here")
+        return args.boxId
     }
 
     private fun getColorValue(): Int {
-        TODO("Extract color value from arguments here")
+        return args.colorValue
     }
 
     private fun getColorName(): String {
-        TODO("Extract color name from arguments here")
+        return args.boxColor
     }
 
 }

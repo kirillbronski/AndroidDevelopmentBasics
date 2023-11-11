@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.navigation.fragment.findNavController
 import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentDashboardBinding
 import com.kbcoding.androiddevelopmentbasics.di.Repositories
@@ -23,7 +24,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     ): FragmentDashboardBinding {
         return FragmentDashboardBinding.inflate(inflater, container, false)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,8 +71,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
     private val boxClickListener = View.OnClickListener {
         val box = it.tag as Box
-        TODO("Launch BoxFragment and send box.id, box.colorValue and color name as it's arguments. " +
-                "BoxFragment should be placed inside the current tab (tabs should be available from BoxFragment)")
+        val direction = DashboardFragmentDirections.actionDashboardFragmentToBoxFragment(
+            box.id,
+            getString(box.colorNameRes),
+            box.colorValue
+        )
+        findNavController().navigate(direction)
     }
 
 }

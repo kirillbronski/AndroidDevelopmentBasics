@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.navOptions
 import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentProfileBinding
 import com.kbcoding.androiddevelopmentbasics.di.Repositories
 import com.kbcoding.androiddevelopmentbasics.domain.model.accounts.Account
+import com.kbcoding.androiddevelopmentbasics.utils.findTopNavController
 import com.kbcoding.androiddevelopmentbasics.utils.observeEvent
 import com.kbcoding.androiddevelopmentbasics.utils.viewModelCreator
 import com.kbcoding.core.BaseFragment
@@ -17,14 +19,13 @@ import java.util.Date
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private val viewModel by viewModelCreator { ProfileViewModel(Repositories.accountsRepository) }
+
     override fun createBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentProfileBinding {
         return FragmentProfileBinding.inflate(inflater, container, false)
     }
-
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,13 +51,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     }
 
     private fun onEditProfileButtonPressed() {
-        TODO("Launch EditProfileFragment gere over tabs (tabs should not be available from EditProfileFragment")
+        findTopNavController().navigate(R.id.editProfileFragment)
     }
 
     private fun observeRestartAppFromLoginScreenEvent() {
         viewModel.restartWithSignInEvent.observeEvent(viewLifecycleOwner) {
-            // user has signed out from the app
-            TODO("Close all tab screens and launch SignInFragment here")
+            findTopNavController().navigate(R.id.signInFragment, null, navOptions {
+                popUpTo(R.id.tabsFragment) {
+                    inclusive = true
+                }
+            })
         }
     }
 

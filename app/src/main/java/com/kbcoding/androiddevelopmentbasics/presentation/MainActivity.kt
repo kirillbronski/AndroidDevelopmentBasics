@@ -28,7 +28,12 @@ class MainActivity : AppCompatActivity() {
 
     // fragment listener is sued for tracking current nav controller
     private val fragmentListener = object : FragmentManager.FragmentLifecycleCallbacks() {
-        override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
+        override fun onFragmentViewCreated(
+            fm: FragmentManager,
+            f: Fragment,
+            v: View,
+            savedInstanceState: Bundle?
+        ) {
             super.onFragmentViewCreated(fm, f, v, savedInstanceState)
             if (f is TabsFragment || f is NavHostFragment) return
             onNavControllerActivated(f.findNavController())
@@ -67,7 +72,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean = (navController?.navigateUp() ?: false) || super.onSupportNavigateUp()
+    override fun onSupportNavigateUp(): Boolean =
+        (navController?.navigateUp() ?: false) || super.onSupportNavigateUp()
 
     private fun prepareRootNavController(isSignedIn: Boolean, navController: NavController) {
         val graph = navController.navInflater.inflate(getMainNavigationGraphId())
@@ -89,14 +95,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getRootNavController(): NavController {
-        val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
+        val navHost =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
         return navHost.navController
     }
 
-    private val destinationListener = NavController.OnDestinationChangedListener { _, destination, arguments ->
-        supportActionBar?.title = prepareTitle(destination.label, arguments)
-        supportActionBar?.setDisplayHomeAsUpEnabled(!isStartDestination(destination))
-    }
+    private val destinationListener =
+        NavController.OnDestinationChangedListener { _, destination, arguments ->
+            supportActionBar?.title = prepareTitle(destination.label, arguments)
+            supportActionBar?.setDisplayHomeAsUpEnabled(!isStartDestination(destination))
+        }
 
     private fun isStartDestination(destination: NavDestination?): Boolean {
         if (destination == null) return false
@@ -129,18 +137,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isSignedIn(): Boolean {
-        TODO("Extract isSignedIn flag from extras bundle here")
+        val bundle = intent.extras ?: throw IllegalStateException("No required arguments")
+        val args = MainActivityArgs.fromBundle(bundle)
+        return args.isSignedIn
     }
 
     private fun getMainNavigationGraphId(): Int {
-        TODO("Please create a main navigation graph and return it's ID here")
+        return R.navigation.main_graph
     }
 
     private fun getTabsDestination(): Int {
-        TODO("Please return the ID of TabsFragment destination from main graph here")
+        return R.id.tabsFragment
     }
 
     private fun getSignInDestination(): Int {
-        TODO("Please return the ID of SignInFragment destination from main graph here")
+        return R.id.signInFragment
     }
 }

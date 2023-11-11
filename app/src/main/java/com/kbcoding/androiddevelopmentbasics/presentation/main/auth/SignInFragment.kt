@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentSignInBinding
 import com.kbcoding.androiddevelopmentbasics.di.Repositories
@@ -14,6 +15,8 @@ import com.kbcoding.core.BaseFragment
 
 class SignInFragment : BaseFragment<FragmentSignInBinding>() {
 
+    private val viewModel by viewModelCreator { SignInViewModel(Repositories.accountsRepository) }
+
     override fun createBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -21,7 +24,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>() {
         return FragmentSignInBinding.inflate(inflater, container, false)
     }
 
-    private val viewModel by viewModelCreator { SignInViewModel(Repositories.accountsRepository) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -68,8 +70,13 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>() {
 
     private fun observeNavigateToTabsEvent() =
         viewModel.navigateToTabsEvent.observeEvent(viewLifecycleOwner) {
-            // user has signed in successfully
-            TODO("Replace SignInFragment by TabsFragment here")
+            val action = R.id.action_signInFragment_to_tabsFragment
+            findNavController().navigate(action)
+//            findNavController().navigate(R.id.action_signInFragment_to_tabsFragment, null, navOptions {
+//                popUpTo(R.id.signInFragment) {
+//                    inclusive = true
+//                }
+//            })
         }
 
     private fun onSignUpButtonPressed() {
@@ -79,9 +86,8 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>() {
         else {
             email
         }
-
-        // user want to create a new account
-        TODO("Launch SignUpFragment here and send emailArg to it")
+        val direction = SignInFragmentDirections.actionSignInFragmentToSignUpFragment(emailArg)
+        findNavController().navigate(direction)
     }
 
 

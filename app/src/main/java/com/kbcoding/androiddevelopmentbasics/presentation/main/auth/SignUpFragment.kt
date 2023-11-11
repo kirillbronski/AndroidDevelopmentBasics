@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputLayout
 import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentSignUpBinding
@@ -17,14 +19,15 @@ import com.kbcoding.core.BaseFragment
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
+    private val args by navArgs<SignUpFragmentArgs>()
+
+    private val viewModel by viewModelCreator { SignUpViewModel(Repositories.accountsRepository) }
     override fun createBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentSignUpBinding {
         return FragmentSignUpBinding.inflate(inflater, container, false)
     }
-
-    private val viewModel by viewModelCreator { SignUpViewModel(Repositories.accountsRepository) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -81,10 +84,10 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
     }
 
     private fun observeGoBackEvent() = viewModel.goBackEvent.observeEvent(viewLifecycleOwner) {
-        TODO("Go back to the previous screen here")
+        findNavController().popBackStack()
     }
 
     private fun getEmailArgument(): String? {
-        TODO("Extract email value from arguments here")
+        return args.email
     }
 }
