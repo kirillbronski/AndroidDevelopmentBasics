@@ -1,4 +1,4 @@
-package com.kbcoding.androiddevelopmentbasics
+package com.kbcoding.core
 
 import android.os.Bundle
 import android.view.LayoutInflater
