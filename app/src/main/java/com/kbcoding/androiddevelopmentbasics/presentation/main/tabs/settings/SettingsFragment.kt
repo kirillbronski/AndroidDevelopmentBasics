@@ -1,13 +1,11 @@
 package com.kbcoding.androiddevelopmentbasics.presentation.main.tabs.settings
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentSettingsBinding
 import com.kbcoding.androiddevelopmentbasics.di.Repositories
 import com.kbcoding.androiddevelopmentbasics.utils.viewModelCreator
@@ -37,6 +35,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         binding.settingsList.layoutManager = LinearLayoutManager(requireContext())
         val adapter = SettingsAdapter(viewModel)
         binding.settingsList.adapter = adapter
+//        val itemAnimator = binding.settingsList.itemAnimator
+//        if (itemAnimator is DefaultItemAnimator) {
+//            itemAnimator.supportsChangeAnimations = false
+//        }
+        //binding.settingsList.itemAnimator = null
         return adapter
     }
 

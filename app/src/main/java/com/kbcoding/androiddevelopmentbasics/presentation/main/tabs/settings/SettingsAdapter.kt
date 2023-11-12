@@ -1,10 +1,7 @@
 package com.kbcoding.androiddevelopmentbasics.presentation.main.tabs.settings
 
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -20,12 +17,21 @@ class SettingsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemSettingsBinding.inflate(inflater, parent, false)
-        //checkBox.setOnClickListener(this)
         return Holder(binding)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.bind(getItem(position))
+    }
+
+    override fun onBindViewHolder(holder: Holder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            if (payloads[0] == true) {
+                holder.bind(getItem(position))
+            }
+        }
     }
 
     inner class Holder(
@@ -60,14 +66,18 @@ class SettingsAdapter(
             oldItem: BoxSetting,
             newItem: BoxSetting
         ): Boolean {
-            return oldItem == newItem
+            return oldItem.box.id == newItem.box.id
         }
 
         override fun areContentsTheSame(
             oldItem: BoxSetting,
             newItem: BoxSetting
         ): Boolean {
-            return oldItem.box.id == newItem.box.id
+            return oldItem == newItem
+        }
+
+        override fun getChangePayload(oldItem: BoxSetting, newItem: BoxSetting): Any? {
+            return if (oldItem.enabled != newItem.enabled) true else null
         }
     }
 
