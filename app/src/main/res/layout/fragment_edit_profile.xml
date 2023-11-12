@@ -46,7 +46,7 @@
 
         <Button
             android:id="@+id/saveButton"
-            style="@style/GlobalTextInputStyle.Big"
+            style="@style/GlobalButtonStyle.Big"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/action_save"
@@ -58,7 +58,7 @@
 
         <Button
             android:id="@+id/cancelButton"
-            style="@style/GlobalTextInputStyle.Secondary.Big"
+            style="@style/GlobalButtonStyle.SecondaryBig"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/action_cancel"
