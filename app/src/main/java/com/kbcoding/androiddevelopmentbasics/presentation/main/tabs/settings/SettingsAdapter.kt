@@ -1,59 +1,75 @@
 package com.kbcoding.androiddevelopmentbasics.presentation.main.tabs.settings
 
+import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kbcoding.androiddevelopmentbasics.R
+import com.kbcoding.androiddevelopmentbasics.databinding.ItemSettingsBinding
 import com.kbcoding.androiddevelopmentbasics.domain.model.Box
 
 class SettingsAdapter(
     private val listener: Listener
-) : RecyclerView.Adapter<SettingsAdapter.Holder>(), View.OnClickListener {
+) : ListAdapter<BoxSetting, SettingsAdapter.Holder>(DiffCallback) {
 
-    private var settings: List<BoxSetting> = emptyList()
-
-    override fun onClick(v: View?) {
-        val checkBox = v as CheckBox
-        val box = v.tag as Box
-        if (checkBox.isChecked) {
-            listener.enableBox(box)
-        } else {
-            listener.disableBox(box)
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val inflater = LayoutInflater.from(parent.context)
-        val checkBox = inflater.inflate(R.layout.item_settings, parent, false) as CheckBox
-        checkBox.setOnClickListener(this)
-        return Holder(checkBox)
+        val binding = ItemSettingsBinding.inflate(inflater, parent, false)
+        //checkBox.setOnClickListener(this)
+        return Holder(binding)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val setting = settings[position]
-        val context = holder.itemView.context
-        holder.checkBox.tag = setting.box
+        holder.bind(getItem(position))
+    }
 
-        if (holder.checkBox.isChecked != setting.enabled) {
-            holder.checkBox.isChecked = setting.enabled
+    inner class Holder(
+        val binding: ItemSettingsBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        private lateinit var item: BoxSetting
+        private val context = binding.root.context
+        fun bind(item: BoxSetting) {
+
+            this.item = item
+
+            if (binding.checkbox.isChecked != item.enabled) {
+                binding.checkbox.isChecked = item.enabled
+            }
+
+            val colorName = context.getString(item.box.colorNameRes)
+            binding.checkbox.text = context.getString(R.string.enable_checkbox, colorName)
+
+            itemView.setOnClickListener {
+                if (binding.checkbox.isChecked) {
+                    listener.enableBox(item.box)
+                } else {
+                    listener.disableBox(item.box)
+                }
+            }
+        }
+    }
+
+    object DiffCallback : DiffUtil.ItemCallback<BoxSetting>() {
+        override fun areItemsTheSame(
+            oldItem: BoxSetting,
+            newItem: BoxSetting
+        ): Boolean {
+            return oldItem == newItem
         }
 
-        val colorName = context.getString(setting.box.colorNameRes)
-        holder.checkBox.text = context.getString(R.string.enable_checkbox, colorName)
+        override fun areContentsTheSame(
+            oldItem: BoxSetting,
+            newItem: BoxSetting
+        ): Boolean {
+            return oldItem.box.id == newItem.box.id
+        }
     }
-
-    override fun getItemCount(): Int = settings.size
-
-    fun renderSettings(settings: List<BoxSetting>) {
-        val diffResult = DiffUtil.calculateDiff(BoxSettingsDiffCallback(this.settings, settings))
-        this.settings = settings
-        diffResult.dispatchUpdatesTo(this)
-    }
-
-    class Holder(val checkBox: CheckBox) : RecyclerView.ViewHolder(checkBox)
 
     interface Listener {
         fun enableBox(box: Box)

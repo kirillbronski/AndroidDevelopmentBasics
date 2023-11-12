@@ -28,7 +28,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = setupList()
-        viewModel.boxSettings.observe(viewLifecycleOwner) { adapter.renderSettings(it) }
+        viewModel.boxSettings.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
     }
 
     private fun setupList(): SettingsAdapter {
