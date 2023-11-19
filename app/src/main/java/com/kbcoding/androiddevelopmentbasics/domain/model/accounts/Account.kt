@@ -4,6 +4,7 @@ package com.kbcoding.androiddevelopmentbasics.domain.model.accounts
  * Information about the user.
  */
 data class Account(
+    val id: Long,
     val username: String,
     val email: String,
     val createdAt: Long = UNKNOWN_CREATED_AT

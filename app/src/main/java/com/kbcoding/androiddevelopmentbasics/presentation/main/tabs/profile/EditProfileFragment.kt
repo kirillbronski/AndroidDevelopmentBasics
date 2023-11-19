@@ -1,8 +1,6 @@
 package com.kbcoding.androiddevelopmentbasics.presentation.main.tabs.profile
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,13 +52,15 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
         }
     }
 
-    private fun listenInitialUsernameEvent() = viewModel.initialUsernameEvent.observeEvent(viewLifecycleOwner) { username ->
-        binding.usernameEditText.setText(username)
-    }
+    private fun listenInitialUsernameEvent() =
+        viewModel.initialUsernameEvent.observeEvent(viewLifecycleOwner) { username ->
+            binding.usernameEditText.setText(username)
+        }
 
-    private fun observeEmptyFieldErrorEvent() = viewModel.showEmptyFieldErrorEvent.observeEvent(viewLifecycleOwner) {
-        Toast.makeText(requireContext(), R.string.field_is_empty, Toast.LENGTH_SHORT).show()
-    }
+    private fun observeEmptyFieldErrorEvent() =
+        viewModel.showEmptyFieldErrorEvent.observeEvent(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), R.string.field_is_empty, Toast.LENGTH_SHORT).show()
+        }
 
     private fun onCancelButtonPressed() {
         findNavController().popBackStack()

@@ -73,7 +73,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         val box = it.tag as Box
         val direction = DashboardFragmentDirections.actionDashboardFragmentToBoxFragment(
             box.id,
-            getString(box.colorNameRes),
+            box.colorName,
             box.colorValue
         )
         findNavController().navigate(direction)

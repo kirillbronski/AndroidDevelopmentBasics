@@ -3,8 +3,8 @@ package com.kbcoding.androiddevelopmentbasics.presentation.main.tabs.profile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kbcoding.androiddevelopmentbasics.model.EmptyFieldException
 import com.kbcoding.androiddevelopmentbasics.domain.repository.AccountsRepository
+import com.kbcoding.androiddevelopmentbasics.model.EmptyFieldException
 import com.kbcoding.androiddevelopmentbasics.utils.MutableLiveEvent
 import com.kbcoding.androiddevelopmentbasics.utils.MutableUnitLiveEvent
 import com.kbcoding.androiddevelopmentbasics.utils.publishEvent

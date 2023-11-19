@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kbcoding.androiddevelopmentbasics.R
+import com.kbcoding.androiddevelopmentbasics.domain.model.accounts.SignUpData
+import com.kbcoding.androiddevelopmentbasics.domain.repository.AccountsRepository
 import com.kbcoding.androiddevelopmentbasics.model.AccountAlreadyExistsException
 import com.kbcoding.androiddevelopmentbasics.model.EmptyFieldException
 import com.kbcoding.androiddevelopmentbasics.model.Field
 import com.kbcoding.androiddevelopmentbasics.model.PasswordMismatchException
-import com.kbcoding.androiddevelopmentbasics.domain.repository.AccountsRepository
-import com.kbcoding.androiddevelopmentbasics.domain.model.accounts.SignUpData
 import com.kbcoding.androiddevelopmentbasics.utils.MutableUnitLiveEvent
 import com.kbcoding.androiddevelopmentbasics.utils.publishEvent
 import com.kbcoding.androiddevelopmentbasics.utils.requireValue

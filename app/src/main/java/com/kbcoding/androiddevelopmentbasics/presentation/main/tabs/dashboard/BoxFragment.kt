@@ -18,7 +18,12 @@ class BoxFragment : BaseFragment<FragmentBoxBinding>() {
 
     private val args by navArgs<BoxFragmentArgs>()
 
-    private val viewModel by viewModelCreator { BoxViewModel(getBoxId(), Repositories.boxesRepository) }
+    private val viewModel by viewModelCreator {
+        BoxViewModel(
+            getBoxId(),
+            Repositories.boxesRepository
+        )
+    }
 
     override fun createBinding(
         inflater: LayoutInflater,
@@ -42,14 +47,15 @@ class BoxFragment : BaseFragment<FragmentBoxBinding>() {
         findNavController().popBackStack()
     }
 
-    private fun listenShouldExitEvent() = viewModel.shouldExitEvent.observeEvent(viewLifecycleOwner) { shouldExit ->
-        if (shouldExit) {
-            // close the screen if the box has been deactivated
-            findNavController().popBackStack()
+    private fun listenShouldExitEvent() =
+        viewModel.shouldExitEvent.observeEvent(viewLifecycleOwner) { shouldExit ->
+            if (shouldExit) {
+                // close the screen if the box has been deactivated
+                findNavController().popBackStack()
+            }
         }
-    }
 
-    private fun getBoxId(): Int {
+    private fun getBoxId(): Long {
         return args.boxId
     }
 
