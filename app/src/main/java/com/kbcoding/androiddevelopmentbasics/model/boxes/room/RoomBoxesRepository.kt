@@ -7,6 +7,7 @@ import com.kbcoding.androiddevelopmentbasics.model.boxes.entities.BoxAndSettings
 import com.kbcoding.androiddevelopmentbasics.domain.repository.AccountsRepository
 import com.kbcoding.androiddevelopmentbasics.domain.repository.BoxesRepository
 import com.kbcoding.androiddevelopmentbasics.model.AuthException
+import com.kbcoding.androiddevelopmentbasics.model.boxes.room.entities.SettingsTuple
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -48,9 +49,9 @@ class RoomBoxesRepository(
         return boxesDao.getBoxesAndSettings(accountId)
             .map { entities ->
                 entities.map {
-                    val boxEntity = it.key
-                    val settingsEntity = it.value
-                    BoxAndSettings(boxEntity.toBox(), settingsEntity == null || settingsEntity.isActive)
+                    val boxEntity = it.boxDbEntity
+                    val settingsEntity = it.settingDbEntity
+                    BoxAndSettings(boxEntity.toBox(), settingsEntity == null || settingsEntity.settings.isActive)
                 }
             }
     }
@@ -61,7 +62,7 @@ class RoomBoxesRepository(
             AccountBoxSettingDbEntity(
                 accountId = account.id,
                 boxId = box.id,
-                isActive = isActive
+                settings = SettingsTuple(isActive = isActive)
             )
         )
     }
