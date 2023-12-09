@@ -5,10 +5,13 @@ import androidx.room.Room
 import com.kbcoding.androiddevelopmentbasics.model.accounts.room.RoomAccountsRepository
 import com.kbcoding.androiddevelopmentbasics.model.boxes.room.RoomBoxesRepository
 import com.kbcoding.androiddevelopmentbasics.data.room.AppDatabase
+
 import com.kbcoding.androiddevelopmentbasics.model.settings.AppSettings
 import com.kbcoding.androiddevelopmentbasics.model.settings.SharedPreferencesAppSettings
 import com.kbcoding.androiddevelopmentbasics.domain.repository.AccountsRepository
 import com.kbcoding.androiddevelopmentbasics.domain.repository.BoxesRepository
+import com.kbcoding.androiddevelopmentbasics.utils.security.DefaultSecurityUtilsImpl
+import com.kbcoding.androiddevelopmentbasics.utils.security.SecurityUtils
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
@@ -18,9 +21,12 @@ object Repositories {
 
     // -- stuffs
 
+    val securityUtils: SecurityUtils by lazy { DefaultSecurityUtilsImpl() }
+
     private val database: AppDatabase by lazy<AppDatabase> {
         Room.databaseBuilder(applicationContext, AppDatabase::class.java, "database.db")
             .createFromAsset("initial_database.db")
+            //.addMigrations(MIGRATION_2_3)
             .build()
     }
 
@@ -33,7 +39,7 @@ object Repositories {
     // --- repositories
 
     val accountsRepository: AccountsRepository by lazy {
-        RoomAccountsRepository(database.getAccountsDao(), appSettings, ioDispatcher)
+        RoomAccountsRepository(database.getAccountsDao(), appSettings, securityUtils, ioDispatcher)
     }
 
     val boxesRepository: BoxesRepository by lazy {

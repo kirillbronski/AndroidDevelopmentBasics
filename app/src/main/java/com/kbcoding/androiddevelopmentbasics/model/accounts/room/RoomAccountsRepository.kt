@@ -15,6 +15,7 @@ import com.kbcoding.androiddevelopmentbasics.model.Field
 import com.kbcoding.androiddevelopmentbasics.model.accounts.entities.AccountFullData
 import com.kbcoding.androiddevelopmentbasics.model.boxes.entities.BoxAndSettings
 import com.kbcoding.androiddevelopmentbasics.utils.AsyncLoader
+import com.kbcoding.androiddevelopmentbasics.utils.security.SecurityUtils
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -28,6 +29,7 @@ import kotlinx.coroutines.flow.map
 class RoomAccountsRepository(
     private val accountsDao: AccountsDao,
     private val appSettings: AppSettings,
+    private val securityUtils: SecurityUtils,
     private val ioDispatcher: CoroutineDispatcher
 ) : AccountsRepository {
 
@@ -110,13 +112,18 @@ class RoomAccountsRepository(
 
     private suspend fun findAccountIdByEmailAndPassword(email: String, password: CharArray): Long {
         val tuple = accountsDao.findByEmail(email) ?: throw AuthException()
-        if (!tuple.password.toCharArray().contentEquals(password)) throw AuthException()
+
+        val saltBytes = securityUtils.stringToBytes(tuple.salt)
+        val hashBytes = securityUtils.passwordToHash(password, saltBytes)
+        val hashString = securityUtils.bytesToString(hashBytes)
+        password.fill('*') // good practice is to clear passwords after usage
+        if (tuple.hash != hashString) throw AuthException()
         return tuple.id
     }
 
     private suspend fun createAccount(signUpData: SignUpData) {
         try {
-            val entity = AccountDbEntity.fromSignUpData(signUpData)
+            val entity = AccountDbEntity.fromSignUpData(signUpData, securityUtils)
             accountsDao.createAccount(entity)
         } catch (e: SQLiteConstraintException) {
             val appException = AccountAlreadyExistsException()

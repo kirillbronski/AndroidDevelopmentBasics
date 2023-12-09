@@ -6,6 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.kbcoding.androiddevelopmentbasics.model.accounts.entities.Account
 import com.kbcoding.androiddevelopmentbasics.model.accounts.entities.SignUpData
+import com.kbcoding.androiddevelopmentbasics.utils.security.SecurityUtils
 
 @Entity(
     tableName = "accounts",
@@ -17,8 +18,10 @@ data class AccountDbEntity(
     @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "email", collate = ColumnInfo.NOCASE) val email: String,
     @ColumnInfo(name = "username") val username: String,
-    @ColumnInfo(name = "password") val password: String,
-    @ColumnInfo(name = "created_at") val createdAt: Long
+    @ColumnInfo(name = "hash") val hash: String,
+    @ColumnInfo(name = "salt", defaultValue = "") val salt: String,
+    @ColumnInfo(name = "created_at") val createdAt: Long,
+    @ColumnInfo(name = "phone") val phone: String?,
 ) {
 
     fun toAccount(): Account = Account(
@@ -29,13 +32,19 @@ data class AccountDbEntity(
     )
 
     companion object {
-        fun fromSignUpData(signUpData: SignUpData): AccountDbEntity {
+        fun fromSignUpData(signUpData: SignUpData, securityUtils: SecurityUtils): AccountDbEntity {
+            val salt = securityUtils.generateSalt()
+            val hash = securityUtils.passwordToHash(signUpData.password, salt)
+            signUpData.password.fill('*')
+            signUpData.repeatPassword.fill('*')
             return AccountDbEntity(
                 id = 0, // SQLite generates identifier automatically if ID = 0
                 email = signUpData.email,
                 username = signUpData.username,
-                password = String(signUpData.password),
-                createdAt = System.currentTimeMillis()
+                hash = securityUtils.bytesToString(hash),
+                salt = securityUtils.bytesToString(salt),
+                createdAt = System.currentTimeMillis(),
+                phone = null
             )
         }
     }

@@ -14,7 +14,8 @@ import com.kbcoding.androiddevelopmentbasics.model.boxes.room.views.SettingDbVie
  */
 data class AccountSignInTuple(
     @ColumnInfo(name = "id") val id: Long,
-    @ColumnInfo(name = "password") val password: String
+    @ColumnInfo(name = "hash") val hash: String,
+    @ColumnInfo(name = "salt") val salt: String
 )
 
 /**
