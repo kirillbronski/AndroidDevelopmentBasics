@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.kbcoding.androiddevelopmentbasics.presentation.splash.SplashFragment"
+        android:name="com.kbcoding.androiddevelopmentbasics.ui.splash.SplashFragment"
         android:label="Splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.kbcoding.androiddevelopmentbasics.presentation.MainActivity"
+        android:name="com.kbcoding.androiddevelopmentbasics.ui.MainActivity"
         android:label="Main"
         tools:layout="@layout/activity_main" >
         <argument

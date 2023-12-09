@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.main.tabs.dashboard.DashboardFragment">
+    tools:context=".ui.main.tabs.dashboard.DashboardFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/boxesContainer"
@@ -28,13 +28,13 @@
 
         <!-- This is an example, real items are derived from the model: -->
 
-        <com.kbcoding.androiddevelopmentbasics.presentation.views.DashboardItemView
+        <com.kbcoding.androiddevelopmentbasics.ui.views.DashboardItemView
             android:id="@+id/greenBox"
             style="@style/DefaultDashboardItemStyle"
             app:color="#008800"
             app:title="Green Box" />
 
-        <com.kbcoding.androiddevelopmentbasics.presentation.views.DashboardItemView
+        <com.kbcoding.androiddevelopmentbasics.ui.views.DashboardItemView
             android:id="@+id/yellowBox"
             style="@style/DefaultDashboardItemStyle"
             app:color="#888800"

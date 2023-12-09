@@ -1,7 +1,7 @@
 package com.kbcoding.androiddevelopmentbasics.domain.repository
 
-import com.kbcoding.androiddevelopmentbasics.domain.model.accounts.Account
-import com.kbcoding.androiddevelopmentbasics.domain.model.accounts.SignUpData
+import com.kbcoding.androiddevelopmentbasics.model.accounts.entities.Account
+import com.kbcoding.androiddevelopmentbasics.model.accounts.entities.SignUpData
 import kotlinx.coroutines.flow.Flow
 
 /**

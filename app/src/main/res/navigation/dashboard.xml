@@ -7,14 +7,14 @@
 
     <fragment
         android:id="@+id/boxFragment"
-        android:name="com.kbcoding.androiddevelopmentbasics.presentation.main.tabs.dashboard.BoxFragment"
+        android:name="com.kbcoding.androiddevelopmentbasics.ui.main.tabs.dashboard.BoxFragment"
         android:label="{boxColor} Box"
         tools:layout="@layout/fragment_box">
         <argument
             android:name="boxId"
             app:argType="long" />
         <argument
-            android:name="boxColor"
+            android:name="colorName"
             app:argType="string" />
         <argument
             android:name="colorValue"
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.kbcoding.androiddevelopmentbasics.presentation.main.tabs.dashboard.DashboardFragment"
+        android:name="com.kbcoding.androiddevelopmentbasics.ui.main.tabs.dashboard.DashboardFragment"
         android:label="Dashboard"
         tools:layout="@layout/fragment_dashboard" >
         <action

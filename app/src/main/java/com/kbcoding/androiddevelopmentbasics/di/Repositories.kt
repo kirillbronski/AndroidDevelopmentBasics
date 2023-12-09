@@ -1,12 +1,12 @@
 package com.kbcoding.androiddevelopmentbasics.di
 
 import android.content.Context
-import android.database.sqlite.SQLiteDatabase
-import com.kbcoding.androiddevelopmentbasics.data.repository.SQLiteAccountsRepositoryImpl
-import com.kbcoding.androiddevelopmentbasics.data.repository.SQLiteBoxesRepositoryImpl
-import com.kbcoding.androiddevelopmentbasics.data.settings.AppSettings
-import com.kbcoding.androiddevelopmentbasics.data.settings.SharedPreferencesAppSettings
-import com.kbcoding.androiddevelopmentbasics.data.sqlite.AppSQLiteHelper
+import androidx.room.Room
+import com.kbcoding.androiddevelopmentbasics.model.accounts.room.RoomAccountsRepository
+import com.kbcoding.androiddevelopmentbasics.model.boxes.room.RoomBoxesRepository
+import com.kbcoding.androiddevelopmentbasics.data.room.AppDatabase
+import com.kbcoding.androiddevelopmentbasics.model.settings.AppSettings
+import com.kbcoding.androiddevelopmentbasics.model.settings.SharedPreferencesAppSettings
 import com.kbcoding.androiddevelopmentbasics.domain.repository.AccountsRepository
 import com.kbcoding.androiddevelopmentbasics.domain.repository.BoxesRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -18,8 +18,10 @@ object Repositories {
 
     // -- stuffs
 
-    private val database: SQLiteDatabase by lazy<SQLiteDatabase> {
-        AppSQLiteHelper(applicationContext).writableDatabase
+    private val database: AppDatabase by lazy<AppDatabase> {
+        Room.databaseBuilder(applicationContext, AppDatabase::class.java, "database.db")
+            .createFromAsset("initial_database.db")
+            .build()
     }
 
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -31,11 +33,11 @@ object Repositories {
     // --- repositories
 
     val accountsRepository: AccountsRepository by lazy {
-        SQLiteAccountsRepositoryImpl(database, appSettings, ioDispatcher)
+        RoomAccountsRepository(database.getAccountsDao(), appSettings, ioDispatcher)
     }
 
     val boxesRepository: BoxesRepository by lazy {
-        SQLiteBoxesRepositoryImpl(database, accountsRepository, ioDispatcher)
+        RoomBoxesRepository(accountsRepository, database.getBoxesDao(), ioDispatcher)
     }
 
     /**
