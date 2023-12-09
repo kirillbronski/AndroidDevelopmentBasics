@@ -29,12 +29,14 @@ data class AccountDbEntity(
     )
 
     companion object {
-        fun fromSignUpData(signUpData: SignUpData) = AccountDbEntity(
-            id = 0, // SQLite generates identifier automatically if ID = 0
-            email = signUpData.email,
-            username = signUpData.username,
-            password = signUpData.password,
-            createdAt = System.currentTimeMillis()
-        )
+        fun fromSignUpData(signUpData: SignUpData): AccountDbEntity {
+            return AccountDbEntity(
+                id = 0, // SQLite generates identifier automatically if ID = 0
+                email = signUpData.email,
+                username = signUpData.username,
+                password = String(signUpData.password),
+                createdAt = System.currentTimeMillis()
+            )
+        }
     }
 }

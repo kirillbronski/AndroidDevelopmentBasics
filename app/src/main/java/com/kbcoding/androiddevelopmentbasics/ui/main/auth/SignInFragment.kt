@@ -10,6 +10,7 @@ import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentSignInBinding
 import com.kbcoding.androiddevelopmentbasics.di.Repositories
 import com.kbcoding.androiddevelopmentbasics.utils.observeEvent
+import com.kbcoding.androiddevelopmentbasics.utils.toCharArray
 import com.kbcoding.androiddevelopmentbasics.utils.viewModelCreator
 import com.kbcoding.core.BaseFragment
 
@@ -39,7 +40,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>() {
     private fun onSignInButtonPressed() {
         viewModel.signIn(
             email = binding.emailEditText.text.toString(),
-            password = binding.passwordEditText.text.toString()
+            password = binding.passwordEditText.text.toCharArray()
         )
     }
 

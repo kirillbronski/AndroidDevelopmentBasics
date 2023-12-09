@@ -12,11 +12,14 @@ import com.kbcoding.androiddevelopmentbasics.model.AccountAlreadyExistsException
 import com.kbcoding.androiddevelopmentbasics.model.AuthException
 import com.kbcoding.androiddevelopmentbasics.model.EmptyFieldException
 import com.kbcoding.androiddevelopmentbasics.model.Field
+import com.kbcoding.androiddevelopmentbasics.model.accounts.entities.AccountFullData
+import com.kbcoding.androiddevelopmentbasics.model.boxes.entities.BoxAndSettings
 import com.kbcoding.androiddevelopmentbasics.utils.AsyncLoader
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
@@ -37,9 +40,9 @@ class RoomAccountsRepository(
         return appSettings.getCurrentAccountId() != AppSettings.NO_ACCOUNT_ID
     }
 
-    override suspend fun signIn(email: String, password: String) = wrapSQLiteException(ioDispatcher) {
+    override suspend fun signIn(email: String, password: CharArray) = wrapSQLiteException(ioDispatcher) {
         if (email.isBlank()) throw EmptyFieldException(Field.Email)
-        if (password.isBlank()) throw EmptyFieldException(Field.Password)
+        if (password.isEmpty()) throw EmptyFieldException(Field.Password)
 
         delay(1000)
 
@@ -85,9 +88,29 @@ class RoomAccountsRepository(
         return@wrapSQLiteException
     }
 
-    private suspend fun findAccountIdByEmailAndPassword(email: String, password: String): Long {
+    override suspend fun getAllData(): Flow<List<AccountFullData>> {
+        val account = getAccount().first()
+        if (account == null || !account.isAdmin()) throw AuthException()
+
+        return accountsDao.getAllData()
+            .map { accountsAndSettings ->
+                accountsAndSettings.map { accountAndSettingsTuple ->
+                    AccountFullData(
+                        account = accountAndSettingsTuple.accountDbEntity.toAccount(),
+                        boxesAndSettings = accountAndSettingsTuple.settings.map {
+                            BoxAndSettings(
+                                box = it.boxDbEntity.toBox(),
+                                isActive = it.accountBoxSettingsDbEntity.settings.isActive
+                            )
+                        }
+                    )
+                }
+            }
+    }
+
+    private suspend fun findAccountIdByEmailAndPassword(email: String, password: CharArray): Long {
         val tuple = accountsDao.findByEmail(email) ?: throw AuthException()
-        if (tuple.password != password) throw AuthException()
+        if (!tuple.password.toCharArray().contentEquals(password)) throw AuthException()
         return tuple.id
     }
 

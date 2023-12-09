@@ -14,6 +14,7 @@ import com.kbcoding.androiddevelopmentbasics.databinding.FragmentSignUpBinding
 import com.kbcoding.androiddevelopmentbasics.di.Repositories
 import com.kbcoding.androiddevelopmentbasics.model.accounts.entities.SignUpData
 import com.kbcoding.androiddevelopmentbasics.utils.observeEvent
+import com.kbcoding.androiddevelopmentbasics.utils.toCharArray
 import com.kbcoding.androiddevelopmentbasics.utils.viewModelCreator
 import com.kbcoding.core.BaseFragment
 
@@ -46,8 +47,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         val signUpData = SignUpData(
             email = binding.emailEditText.text.toString(),
             username = binding.usernameEditText.text.toString(),
-            password = binding.passwordEditText.text.toString(),
-            repeatPassword = binding.repeatPasswordEditText.text.toString(),
+            password = binding.passwordEditText.text.toCharArray(),
+            repeatPassword = binding.repeatPasswordEditText.text.toCharArray(),
         )
         viewModel.signUp(signUpData)
     }

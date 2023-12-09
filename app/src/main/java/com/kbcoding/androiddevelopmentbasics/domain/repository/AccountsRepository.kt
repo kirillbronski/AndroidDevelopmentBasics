@@ -1,6 +1,7 @@
 package com.kbcoding.androiddevelopmentbasics.domain.repository
 
 import com.kbcoding.androiddevelopmentbasics.model.accounts.entities.Account
+import com.kbcoding.androiddevelopmentbasics.model.accounts.entities.AccountFullData
 import com.kbcoding.androiddevelopmentbasics.model.accounts.entities.SignUpData
 import kotlinx.coroutines.flow.Flow
 
@@ -20,7 +21,7 @@ interface AccountsRepository {
      * @throws [AuthException]
      * @throws [StorageException]
      */
-    suspend fun signIn(email: String, password: String)
+    suspend fun signIn(email: String, password: CharArray)
 
     /**
      * Create a new account.
@@ -48,5 +49,11 @@ interface AccountsRepository {
      * @throws [StorageException]
      */
     suspend fun updateAccountUsername(newUsername: String)
+
+    /**
+     * Get all accounts with their boxes and settings.
+     * Only admin user can do this. Otherwise [AuthException] is thrown.
+     */
+    suspend fun getAllData(): Flow<List<AccountFullData>>
 
 }

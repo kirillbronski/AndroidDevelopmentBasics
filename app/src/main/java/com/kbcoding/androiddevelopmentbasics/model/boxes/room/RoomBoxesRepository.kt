@@ -50,8 +50,11 @@ class RoomBoxesRepository(
             .map { entities ->
                 entities.map {
                     val boxEntity = it.boxDbEntity
-                    val settingsEntity = it.settingDbEntity
-                    BoxAndSettings(boxEntity.toBox(), settingsEntity == null || settingsEntity.settings.isActive)
+                    val settingEntity = it.settingDbEntity
+                    BoxAndSettings(
+                        box = boxEntity.toBox(),
+                        isActive = settingEntity.settings.isActive
+                    )
                 }
             }
     }

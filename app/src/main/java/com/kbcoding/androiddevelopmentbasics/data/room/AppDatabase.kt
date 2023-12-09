@@ -7,6 +7,7 @@ import com.kbcoding.androiddevelopmentbasics.model.accounts.room.entities.Accoun
 import com.kbcoding.androiddevelopmentbasics.model.boxes.room.entities.BoxDbEntity
 import com.kbcoding.androiddevelopmentbasics.model.accounts.room.AccountsDao
 import com.kbcoding.androiddevelopmentbasics.model.boxes.room.BoxesDao
+import com.kbcoding.androiddevelopmentbasics.model.boxes.room.views.SettingDbView
 
 @Database(
     version = 1,
@@ -14,6 +15,9 @@ import com.kbcoding.androiddevelopmentbasics.model.boxes.room.BoxesDao
         AccountDbEntity::class,
         BoxDbEntity::class,
         AccountBoxSettingDbEntity::class
+    ],
+    views = [
+        SettingDbView::class
     ]
 )
 abstract class AppDatabase : RoomDatabase() {
