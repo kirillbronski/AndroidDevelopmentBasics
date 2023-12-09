@@ -12,7 +12,7 @@ import com.kbcoding.androiddevelopmentbasics.model.boxes.room.BoxesDao
 import com.kbcoding.androiddevelopmentbasics.model.boxes.room.views.SettingDbView
 
 @Database(
-    version = 2,
+    version = 3,
     entities = [
         AccountDbEntity::class,
         BoxDbEntity::class,

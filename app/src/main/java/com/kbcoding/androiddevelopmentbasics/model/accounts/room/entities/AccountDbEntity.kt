@@ -22,6 +22,7 @@ data class AccountDbEntity(
     @ColumnInfo(name = "salt", defaultValue = "") val salt: String,
     @ColumnInfo(name = "created_at") val createdAt: Long,
     @ColumnInfo(name = "phone") val phone: String?,
+    @ColumnInfo(name = "name") val name: String?,
 ) {
 
     fun toAccount(): Account = Account(
@@ -44,7 +45,8 @@ data class AccountDbEntity(
                 hash = securityUtils.bytesToString(hash),
                 salt = securityUtils.bytesToString(salt),
                 createdAt = System.currentTimeMillis(),
-                phone = null
+                phone = null,
+                name = null
             )
         }
     }

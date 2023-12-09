@@ -5,7 +5,7 @@ import androidx.room.Room
 import com.kbcoding.androiddevelopmentbasics.model.accounts.room.RoomAccountsRepository
 import com.kbcoding.androiddevelopmentbasics.model.boxes.room.RoomBoxesRepository
 import com.kbcoding.androiddevelopmentbasics.data.room.AppDatabase
-
+import com.kbcoding.androiddevelopmentbasics.data.room.MIGRATION_2_3
 import com.kbcoding.androiddevelopmentbasics.model.settings.AppSettings
 import com.kbcoding.androiddevelopmentbasics.model.settings.SharedPreferencesAppSettings
 import com.kbcoding.androiddevelopmentbasics.domain.repository.AccountsRepository
@@ -26,7 +26,7 @@ object Repositories {
     private val database: AppDatabase by lazy<AppDatabase> {
         Room.databaseBuilder(applicationContext, AppDatabase::class.java, "database.db")
             .createFromAsset("initial_database.db")
-            //.addMigrations(MIGRATION_2_3)
+            .addMigrations(MIGRATION_2_3)
             .build()
     }
 
