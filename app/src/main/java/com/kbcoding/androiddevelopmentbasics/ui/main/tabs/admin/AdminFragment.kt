@@ -16,7 +16,7 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>() {
         AdminViewModel(Repositories.accountsRepository, resources)
     }
 
-    private lateinit var adapter: AdminItemsAdapter
+    private lateinit var adapter: AdminAdapter
 
     override fun createBinding(
         inflater: LayoutInflater,
@@ -29,7 +29,7 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         val layoutManager = LinearLayoutManager(requireContext())
-        adapter = AdminItemsAdapter(viewModel)
+        adapter = AdminAdapter(viewModel)
 
         binding.adminTreeRecyclerView.layoutManager = layoutManager
         binding.adminTreeRecyclerView.adapter = adapter
@@ -39,7 +39,7 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>() {
 
     private fun observeTreeItems() {
         viewModel.items.observe(viewLifecycleOwner) { treeItems ->
-            adapter.renderItems(treeItems)
+            adapter.submitList(treeItems)
         }
     }
 

@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 class AdminViewModel(
     private val accountsRepository: AccountsRepository,
     private val resources: Resources
-) : ViewModel(), AdminItemsAdapter.Listener {
+) : ViewModel(), AdminAdapter.Listener {
 
     private val _items = MutableLiveData<List<AdminTreeItem>>()
     val items = _items.share()
