@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="active">@android:color/holo_purple</color>
+    <color name="inactive">#8b8b8b</color>
 </resources>

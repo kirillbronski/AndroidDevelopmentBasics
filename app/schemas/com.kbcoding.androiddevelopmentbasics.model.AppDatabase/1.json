@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "498ab0cb6afa8de00477432d8fed8fde",
+    "identityHash": "7f86e6a4e0cb42bb9e83d0164061f12a",
     "entities": [
       {
         "tableName": "users",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL COLLATE NOCASE, `company` TEXT NOT NULL, `imageUrl` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL COLLATE NOCASE, `company` TEXT NOT NULL, `imageUrl` TEXT NOT NULL, `isFavorite` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -30,6 +30,12 @@
             "fieldPath": "imageUrl",
             "columnName": "imageUrl",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isFavorite",
+            "columnName": "isFavorite",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -56,7 +62,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '498ab0cb6afa8de00477432d8fed8fde')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7f86e6a4e0cb42bb9e83d0164061f12a')"
     ]
   }
 }

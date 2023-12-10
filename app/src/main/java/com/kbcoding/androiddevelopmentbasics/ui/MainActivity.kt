@@ -2,6 +2,7 @@ package com.kbcoding.androiddevelopmentbasics.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.view.isInvisible
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
@@ -13,6 +14,7 @@ import com.kbcoding.androiddevelopmentbasics.databinding.ActivityMainBinding
 import com.kbcoding.androiddevelopmentbasics.adapters.DefaultLoadStateAdapter
 import com.kbcoding.androiddevelopmentbasics.adapters.TryAgainAction
 import com.kbcoding.androiddevelopmentbasics.adapters.UsersAdapter
+import com.kbcoding.androiddevelopmentbasics.observeEvent
 import com.kbcoding.androiddevelopmentbasics.simpleScan
 import com.kbcoding.androiddevelopmentbasics.viewModelCreator
 import kotlinx.coroutines.FlowPreview
@@ -40,18 +42,22 @@ class MainActivity : AppCompatActivity() {
         setupSearchInput()
         setupSwipeToRefresh()
         setupEnableErrorsCheckBox()
+
+        observeErrorMessages()
     }
 
     private fun setupUsersList() {
-        val adapter = UsersAdapter()
+        val adapter = UsersAdapter(viewModel)
 
         // in case of loading errors this callback is called when you tap the 'Try Again' button
         val tryAgainAction: TryAgainAction = { adapter.retry() }
 
         val footerAdapter = DefaultLoadStateAdapter(tryAgainAction)
+        val headerAdapter = DefaultLoadStateAdapter(tryAgainAction)
 
         // combined adapter which shows both the list of users + footer indicator when loading pages
-        val adapterWithLoadState = adapter.withLoadStateFooter(footerAdapter)
+        val adapterWithLoadState =
+            adapter.withLoadStateHeaderAndFooter(headerAdapter, footerAdapter)
 
         binding.usersRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.usersRecyclerView.adapter = adapterWithLoadState
@@ -66,6 +72,7 @@ class MainActivity : AppCompatActivity() {
 
         observeUsers(adapter)
         observeLoadState(adapter)
+        observeInvalidationEvents(adapter)
 
         handleScrollingToTopWhenSearching(adapter)
         handleListVisibility(adapter)
@@ -91,7 +98,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @OptIn(FlowPreview::class)
     private fun observeLoadState(adapter: UsersAdapter) {
         // you can also use adapter.addLoadStateListener
         lifecycleScope.launch {
@@ -108,7 +114,9 @@ class MainActivity : AppCompatActivity() {
         getRefreshLoadStateFlow(adapter)
             .simpleScan(count = 2)
             .collectLatest { (previousState, currentState) ->
-                if (previousState is LoadState.Loading && currentState is LoadState.NotLoading) {
+                if (previousState is LoadState.Loading && currentState is LoadState.NotLoading
+                    && viewModel.scrollEvents.value?.get() != null
+                ) {
                     binding.usersRecyclerView.scrollToPosition(0)
                 }
             }
@@ -132,6 +140,18 @@ class MainActivity : AppCompatActivity() {
     private fun getRefreshLoadStateFlow(adapter: UsersAdapter): Flow<LoadState> {
         return adapter.loadStateFlow
             .map { it.refresh }
+    }
+
+    private fun observeErrorMessages() {
+        viewModel.errorEvents.observeEvent(this) { messageRes ->
+            Toast.makeText(this, messageRes, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun observeInvalidationEvents(adapter: UsersAdapter) {
+        viewModel.invalidateEvents.observeEvent(this) {
+            adapter.refresh()
+        }
     }
 
     // ----

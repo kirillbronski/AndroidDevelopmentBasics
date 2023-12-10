@@ -32,20 +32,37 @@ class RoomUsersRepository(
         }
         return Pager(
             config = PagingConfig(
+                // for now let's use the same page size for initial
+                // and subsequent loads
                 pageSize = PAGE_SIZE,
+                initialLoadSize = PAGE_SIZE,
+                prefetchDistance = PAGE_SIZE / 2,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { UsersPagingSource(loader, PAGE_SIZE) }
+            pagingSourceFactory = { UsersPagingSource(loader) }
         ).flow
     }
 
+    override suspend fun setIsFavorite(user: User, isFavorite: Boolean) = withContext(ioDispatcher) {
+        delay(1000)
+        throwErrorsIfEnabled()
+
+        val tuple = UpdateUserFavoriteFlagTuple(user.id, isFavorite)
+        usersDao.setIsFavorite(tuple)
+    }
+
+    override suspend fun delete(user: User) = withContext(ioDispatcher) {
+        delay(1000)
+        throwErrorsIfEnabled()
+
+        usersDao.delete(IdTuple(user.id))
+    }
+
     private suspend fun getUsers(pageIndex: Int, pageSize: Int, searchBy: String): List<User>
-    = withContext(ioDispatcher) {
+            = withContext(ioDispatcher) {
 
         delay(2000) // some delay to test loading state
-
-        // if "Enable Errors" checkbox is checked -> throw exception
-        if (enableErrorsFlow.value) throw IllegalStateException("Error!")
+        throwErrorsIfEnabled()
 
         // calculate offset value required by DAO
         val offset = pageIndex * pageSize
@@ -58,7 +75,11 @@ class RoomUsersRepository(
             .map(UserDbEntity::toUser)
     }
 
+    private fun throwErrorsIfEnabled() {
+        if (enableErrorsFlow.value) throw IllegalStateException("Error!")
+    }
+
     private companion object {
-        const val PAGE_SIZE = 20
+        const val PAGE_SIZE = 40
     }
 }

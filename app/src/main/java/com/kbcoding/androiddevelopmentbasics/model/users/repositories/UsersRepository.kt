@@ -22,4 +22,16 @@ interface UsersRepository {
      */
     fun getPagedUsers(searchBy: String): Flow<PagingData<User>>
 
+    /**
+     * Set the "star" flag for the specified user.
+     * @throws IllegalStateException if the 'Enable Errors' checkbox is checked.
+     */
+    suspend fun setIsFavorite(user: User, isFavorite: Boolean)
+
+    /**
+     * Delete the user item from the app.
+     * @throws IllegalStateException if the 'Enable Errors' checkbox is checked.
+     */
+    suspend fun delete(user: User)
+
 }

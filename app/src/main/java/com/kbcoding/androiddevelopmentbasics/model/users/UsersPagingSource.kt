@@ -1,5 +1,6 @@
 package com.kbcoding.androiddevelopmentbasics.model.users
 
+import androidx.paging.Pager
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 
@@ -9,9 +10,9 @@ typealias UsersPageLoader = suspend (pageIndex: Int, pageSize: Int) -> List<User
  * Example implementation of [PagingSource].
  * It is used by [Pager] for fetching data.
  */
+@Suppress("UnnecessaryVariable")
 class UsersPagingSource(
-    private val loader: UsersPageLoader,
-    private val pageSize: Int
+    private val loader: UsersPageLoader
 ) : PagingSource<Int, User>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, User> {
@@ -26,9 +27,8 @@ class UsersPagingSource(
                 data = users,
                 // index of the previous page if exists
                 prevKey = if (pageIndex == 0) null else pageIndex - 1,
-                // index of the next page if exists;
-                // please note that 'params.loadSize' may be larger for the first load (by default x3 times)
-                nextKey = if (users.size == params.loadSize) pageIndex + (params.loadSize / pageSize) else null
+                // index of the next page if exists
+                nextKey = if (users.size == params.loadSize) pageIndex + 1 else null
             )
         } catch (e: Exception) {
             // failed to load users -> need to return LoadResult.Error
@@ -44,7 +44,7 @@ class UsersPagingSource(
         // convert item index to page index:
         val page = state.closestPageToPosition(anchorPosition) ?: return null
         // page doesn't have 'currentKey' property, so need to calculate it manually:
-        return page.prevKey?.plus(1) ?: page.nextKey?.minus(1)
+        return page.nextKey?.minus(1) ?: page.prevKey?.plus(1)
     }
 
 }
