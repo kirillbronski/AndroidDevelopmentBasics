@@ -49,6 +49,8 @@ android {
 
 dependencies {
 
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
     // Paging library
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
 
