@@ -10,7 +10,6 @@ typealias UsersPageLoader = suspend (pageIndex: Int, pageSize: Int) -> List<User
  * Example implementation of [PagingSource].
  * It is used by [Pager] for fetching data.
  */
-@Suppress("UnnecessaryVariable")
 class UsersPagingSource(
     private val loader: UsersPageLoader
 ) : PagingSource<Int, User>() {
