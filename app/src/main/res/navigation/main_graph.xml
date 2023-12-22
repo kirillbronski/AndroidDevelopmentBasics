@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.kbcoding.androiddevelopmentbasics.ui.main.tabs.profile.EditProfileFragment"
+        android:name="com.kbcoding.androiddevelopmentbasics.app.ui.main.tabs.profile.EditProfileFragment"
         android:label="Edit profile"
         tools:layout="@layout/fragment_edit_profile" />
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.kbcoding.androiddevelopmentbasics.ui.main.auth.SignInFragment"
+        android:name="com.kbcoding.androiddevelopmentbasics.app.ui.main.auth.SignInFragment"
         android:label="Sign In"
         tools:layout="@layout/fragment_sign_in">
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.kbcoding.androiddevelopmentbasics.ui.main.auth.SignUpFragment"
+        android:name="com.kbcoding.androiddevelopmentbasics.app.ui.main.auth.SignUpFragment"
         android:label="Sign Up"
         tools:layout="@layout/fragment_sign_up" >
         <argument
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/tabsFragment"
-        android:name="com.kbcoding.androiddevelopmentbasics.ui.main.tabs.TabsFragment"
+        android:name="com.kbcoding.androiddevelopmentbasics.app.ui.main.tabs.TabsFragment"
         android:label="Tabs"
         tools:layout="@layout/fragment_tabs">
         <action

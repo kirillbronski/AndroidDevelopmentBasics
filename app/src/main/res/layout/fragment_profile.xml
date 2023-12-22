@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".ui.main.tabs.profile.ProfileFragment">
+    tools:context="app.ui.main.tabs.profile.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -112,7 +112,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:text="@string/action_logout"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.kbcoding.androiddevelopmentbasics.app.ui.views.ResultView
+            android:id="@+id/resultView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
