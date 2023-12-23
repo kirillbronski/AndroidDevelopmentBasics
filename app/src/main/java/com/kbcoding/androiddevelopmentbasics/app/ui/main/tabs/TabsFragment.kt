@@ -14,7 +14,7 @@ import com.kbcoding.core.BaseViewModel
 
 class TabsFragment : BaseFragment<FragmentTabsBinding>() {
 
-    override val viewModel by viewModels<BaseViewModel>()
+    override val viewModel by viewModels<TabsViewModel>()
 
     override fun createBinding(
         inflater: LayoutInflater,
