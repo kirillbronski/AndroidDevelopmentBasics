@@ -1,26 +1,38 @@
 package com.kbcoding.androiddevelopmentbasics.sources
 
-import com.google.gson.Gson
 import com.kbcoding.androiddevelopmentbasics.app.Const
 import com.kbcoding.androiddevelopmentbasics.app.Singletons
 import com.kbcoding.androiddevelopmentbasics.app.model.SourcesProvider
 import com.kbcoding.androiddevelopmentbasics.app.model.settings.AppSettings
-import com.kbcoding.androiddevelopmentbasics.sources.base.OkHttpConfig
-import com.kbcoding.androiddevelopmentbasics.sources.base.OkHttpSourcesProvider
-
+import com.kbcoding.androiddevelopmentbasics.sources.base.RetrofitConfig
+import com.kbcoding.androiddevelopmentbasics.sources.base.RetrofitSourcesProvider
+import com.squareup.moshi.Moshi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 object SourceProviderHolder {
 
     val sourcesProvider: SourcesProvider by lazy {
-        val config = OkHttpConfig(
-            baseUrl = Const.BASE_URL,
-            client = createOkHttpClient(),
-            gson = Gson()
+        val moshi = Moshi.Builder().build()
+        val config = RetrofitConfig(
+            retrofit = createRetrofit(moshi),
+            moshi = moshi
         )
-        OkHttpSourcesProvider(config)
+        RetrofitSourcesProvider(config)
+    }
+
+    /**
+     * Create an instance of Retrofit client.
+     */
+    private fun createRetrofit(moshi: Moshi): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(Const.BASE_URL)
+            .client(createOkHttpClient())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
     }
 
     /**
