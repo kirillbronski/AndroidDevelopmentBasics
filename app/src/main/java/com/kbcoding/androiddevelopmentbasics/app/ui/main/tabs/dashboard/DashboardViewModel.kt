@@ -2,7 +2,6 @@ package com.kbcoding.androiddevelopmentbasics.app.ui.main.tabs.dashboard
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.kbcoding.androiddevelopmentbasics.app.Singletons
 import com.kbcoding.androiddevelopmentbasics.app.model.ResponseResult
 import com.kbcoding.androiddevelopmentbasics.app.model.accounts.AccountsRepository
 import com.kbcoding.androiddevelopmentbasics.app.model.boxes.BoxesRepository
@@ -12,13 +11,16 @@ import com.kbcoding.androiddevelopmentbasics.app.utils.logger.LogCatLogger
 import com.kbcoding.androiddevelopmentbasics.app.utils.logger.Logger
 import com.kbcoding.androiddevelopmentbasics.app.utils.share
 import com.kbcoding.core.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class DashboardViewModel(
-    private val boxesRepository: BoxesRepository = Singletons.boxesRepository,
-    accountsRepository: AccountsRepository = Singletons.accountsRepository,
-    logger: Logger = LogCatLogger
+@HiltViewModel
+class DashboardViewModel @Inject constructor(
+    private val boxesRepository: BoxesRepository,
+    accountsRepository: AccountsRepository,
+    logger: Logger
 ) : BaseViewModel(accountsRepository, logger) {
 
     private val _boxes = MutableLiveData<ResponseResult<List<Box>>>()

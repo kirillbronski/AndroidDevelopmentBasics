@@ -12,12 +12,19 @@ import com.kbcoding.androiddevelopmentbasics.app.utils.observeEvent
 import com.kbcoding.androiddevelopmentbasics.app.utils.viewModelCreator
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentBoxBinding
 import com.kbcoding.core.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class BoxFragment : BaseFragment<FragmentBoxBinding>() {
 
     private val args by navArgs<BoxFragmentArgs>()
 
-    override val viewModel by viewModelCreator { BoxViewModel(getBoxId()) }
+    @Inject
+    lateinit var factory: BoxViewModel.Factory
+    override val viewModel by viewModelCreator {
+        factory.create(args.boxId)
+    }
 
     override fun createBinding(
         inflater: LayoutInflater,

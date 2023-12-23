@@ -11,11 +11,14 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.kbcoding.androiddevelopmentbasics.R
-import com.kbcoding.androiddevelopmentbasics.app.Singletons
+import com.kbcoding.androiddevelopmentbasics.app.model.settings.AppSettings
 import com.kbcoding.androiddevelopmentbasics.app.ui.main.tabs.TabsFragment
 import com.kbcoding.androiddevelopmentbasics.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Pattern
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     // view-model is used for observing username to be displayed in the toolbar
@@ -41,7 +44,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Singletons.init(applicationContext)
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
         setSupportActionBar(binding.toolbar)

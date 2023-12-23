@@ -1,15 +1,18 @@
 package com.kbcoding.androiddevelopmentbasics.app.model.settings
 
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
 /**
  * Implementation of [AppSettings] based on [SharedPreferences].
  */
-class SharedPreferencesAppSettings(
-    appContext: Context
+class SharedPreferencesAppSettings @Inject constructor(
+    @ApplicationContext appContext: Context
 ) : AppSettings {
 
-    private val sharedPreferences = appContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
+    private val sharedPreferences =
+        appContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
 
     override fun setCurrentToken(token: String?) {
         val editor = sharedPreferences.edit()

@@ -11,9 +11,11 @@ import com.kbcoding.androiddevelopmentbasics.app.utils.findTopNavController
 import com.kbcoding.androiddevelopmentbasics.app.utils.observeResults
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentProfileBinding
 import com.kbcoding.core.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Date
 
+@AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     override val viewModel by viewModels<ProfileViewModel>()

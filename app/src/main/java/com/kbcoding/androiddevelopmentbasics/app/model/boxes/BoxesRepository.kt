@@ -13,17 +13,22 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class BoxesRepository(
+@Singleton
+class BoxesRepository @Inject constructor(
     private val accountsRepository: AccountsRepository,
     private val boxesSource: BoxesSource
 ) {
 
-    private var accountResponseResult: com.kbcoding.androiddevelopmentbasics.app.model.ResponseResult<Account> = Empty()
+    private var accountResponseResult: com.kbcoding.androiddevelopmentbasics.app.model.ResponseResult<Account> =
+        Empty()
 
-    private val boxesLazyFlowSubject = LazyFlowSubject<BoxesFilter, List<BoxAndSettings>> { filter ->
-        wrapBackendExceptions { boxesSource.getBoxes(filter) }
-    }
+    private val boxesLazyFlowSubject =
+        LazyFlowSubject<BoxesFilter, List<BoxAndSettings>> { filter ->
+            wrapBackendExceptions { boxesSource.getBoxes(filter) }
+        }
 
     /**
      * Get the list of boxes.

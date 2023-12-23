@@ -13,7 +13,9 @@ import com.kbcoding.androiddevelopmentbasics.app.ui.views.DashboardItemView
 import com.kbcoding.androiddevelopmentbasics.app.utils.observeResults
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentDashboardBinding
 import com.kbcoding.core.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
     override val viewModel by viewModels<DashboardViewModel>()

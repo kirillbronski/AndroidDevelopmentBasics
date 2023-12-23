@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kbcoding.androiddevelopmentbasics.app.utils.observeEvent
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentSettingsBinding
 import com.kbcoding.core.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
     override val viewModel by viewModels<SettingsViewModel>()

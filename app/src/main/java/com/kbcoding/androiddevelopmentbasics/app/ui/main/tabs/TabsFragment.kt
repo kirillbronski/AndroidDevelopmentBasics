@@ -11,7 +11,9 @@ import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentTabsBinding
 import com.kbcoding.core.BaseFragment
 import com.kbcoding.core.BaseViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TabsFragment : BaseFragment<FragmentTabsBinding>() {
 
     override val viewModel by viewModels<TabsViewModel>()

@@ -2,16 +2,13 @@ package com.kbcoding.androiddevelopmentbasics.app.ui.main.auth
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kbcoding.androiddevelopmentbasics.R
-import com.kbcoding.androiddevelopmentbasics.app.Singletons
 import com.kbcoding.androiddevelopmentbasics.app.model.AccountAlreadyExistsException
 import com.kbcoding.androiddevelopmentbasics.app.model.EmptyFieldException
 import com.kbcoding.androiddevelopmentbasics.app.model.Field
 import com.kbcoding.androiddevelopmentbasics.app.model.PasswordMismatchException
 import com.kbcoding.androiddevelopmentbasics.app.model.accounts.AccountsRepository
-import com.kbcoding.androiddevelopmentbasics.app.model.accounts.AccountsSource
 import com.kbcoding.androiddevelopmentbasics.app.model.accounts.entities.SignUpData
 import com.kbcoding.androiddevelopmentbasics.app.utils.MutableLiveEvent
 import com.kbcoding.androiddevelopmentbasics.app.utils.MutableUnitLiveEvent
@@ -21,12 +18,13 @@ import com.kbcoding.androiddevelopmentbasics.app.utils.publishEvent
 import com.kbcoding.androiddevelopmentbasics.app.utils.requireValue
 import com.kbcoding.androiddevelopmentbasics.app.utils.share
 import com.kbcoding.core.BaseViewModel
-import kotlinx.coroutines.launch
-import okhttp3.logging.HttpLoggingInterceptor
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SignUpViewModel(
-    accountsRepository: AccountsRepository = Singletons.accountsRepository,
-    logger: Logger = LogCatLogger
+@HiltViewModel
+class SignUpViewModel @Inject constructor(
+    accountsRepository: AccountsRepository,
+    logger: Logger
 ) : BaseViewModel(accountsRepository, logger) {
 
     private val _goBackEvent = MutableUnitLiveEvent()

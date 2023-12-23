@@ -11,7 +11,9 @@ import com.kbcoding.androiddevelopmentbasics.R
 import com.kbcoding.androiddevelopmentbasics.app.utils.observeEvent
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentSignInBinding
 import com.kbcoding.core.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignInFragment : BaseFragment<FragmentSignInBinding>() {
 
     override val viewModel by viewModels<SignInViewModel>()

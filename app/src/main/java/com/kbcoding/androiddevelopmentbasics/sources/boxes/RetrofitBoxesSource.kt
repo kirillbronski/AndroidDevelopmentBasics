@@ -7,8 +7,11 @@ import com.kbcoding.androiddevelopmentbasics.sources.base.BaseRetrofitSource
 import com.kbcoding.androiddevelopmentbasics.sources.base.RetrofitConfig
 import com.kbcoding.androiddevelopmentbasics.sources.boxes.entities.UpdateBoxRequestEntity
 import kotlinx.coroutines.delay
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RetrofitBoxesSource(
+@Singleton
+class RetrofitBoxesSource @Inject constructor(
     config: RetrofitConfig
 ) : BaseRetrofitSource(config), BoxesSource {
 

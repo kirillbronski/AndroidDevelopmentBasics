@@ -9,8 +9,11 @@ import com.kbcoding.androiddevelopmentbasics.sources.accounts.entities.UpdateUse
 import com.kbcoding.androiddevelopmentbasics.sources.base.BaseRetrofitSource
 import com.kbcoding.androiddevelopmentbasics.sources.base.RetrofitConfig
 import kotlinx.coroutines.delay
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RetrofitAccountsSource(
+@Singleton
+class RetrofitAccountsSource @Inject constructor(
     config: RetrofitConfig
 ) : BaseRetrofitSource(config), AccountsSource {
 

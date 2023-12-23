@@ -11,7 +11,9 @@ import com.kbcoding.androiddevelopmentbasics.app.ui.MainActivityArgs
 import com.kbcoding.androiddevelopmentbasics.app.utils.observeEvent
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentSplashBinding
 import com.kbcoding.core.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
     override fun createBinding(

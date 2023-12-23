@@ -1,48 +1,45 @@
-package com.kbcoding.androiddevelopmentbasics.sources
+package com.kbcoding.androiddevelopmentbasics.di
 
 import com.kbcoding.androiddevelopmentbasics.app.Const
-import com.kbcoding.androiddevelopmentbasics.app.Singletons
-import com.kbcoding.androiddevelopmentbasics.app.model.SourcesProvider
 import com.kbcoding.androiddevelopmentbasics.app.model.settings.AppSettings
-import com.kbcoding.androiddevelopmentbasics.sources.base.RetrofitConfig
-import com.kbcoding.androiddevelopmentbasics.sources.base.RetrofitSourcesProvider
 import com.squareup.moshi.Moshi
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Singleton
 
-object SourceProviderHolder {
+@Module
+@InstallIn(SingletonComponent::class)
+class NetworkModule {
 
-    val sourcesProvider: SourcesProvider by lazy {
-        val moshi = Moshi.Builder().build()
-        val config = RetrofitConfig(
-            retrofit = createRetrofit(moshi),
-            moshi = moshi
-        )
-        RetrofitSourcesProvider(config)
+    @Provides
+    @Singleton
+    fun provideMoshi(): Moshi {
+        return Moshi.Builder().build()
     }
 
-    /**
-     * Create an instance of Retrofit client.
-     */
-    private fun createRetrofit(moshi: Moshi): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(Const.BASE_URL)
-            .client(createOkHttpClient())
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+    @Provides
+    @Singleton
+    fun provideHttpClient(settings: AppSettings): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(createAuthorizationInterceptor(settings))
+            .addInterceptor(createLoggingInterceptor())
             .build()
     }
 
-    /**
-     * Create an instance of OkHttpClient with interceptors for authorization
-     * and logging (see [createAuthorizationInterceptor] and [createLoggingInterceptor]).
-     */
-    private fun createOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(createAuthorizationInterceptor(Singletons.appSettings))
-            .addInterceptor(createLoggingInterceptor())
+    @Provides
+    @Singleton
+    fun provideRetrofit(client: OkHttpClient, moshi: Moshi): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(Const.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(client)
             .build()
     }
 
@@ -67,5 +64,4 @@ object SourceProviderHolder {
         return HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.BODY)
     }
-
 }

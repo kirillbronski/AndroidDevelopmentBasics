@@ -10,7 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.kbcoding.androiddevelopmentbasics.app.utils.observeEvent
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentEditProfileBinding
 import com.kbcoding.core.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
 
     override val viewModel by viewModels<EditProfileViewModel>()

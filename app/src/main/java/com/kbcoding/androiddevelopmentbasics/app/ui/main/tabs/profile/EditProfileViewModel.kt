@@ -1,14 +1,11 @@
 package com.kbcoding.androiddevelopmentbasics.app.ui.main.tabs.profile
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kbcoding.androiddevelopmentbasics.R
-import com.kbcoding.androiddevelopmentbasics.app.Singletons
 import com.kbcoding.androiddevelopmentbasics.app.model.EmptyFieldException
 import com.kbcoding.androiddevelopmentbasics.app.model.Success
 import com.kbcoding.androiddevelopmentbasics.app.model.accounts.AccountsRepository
-import com.kbcoding.androiddevelopmentbasics.app.model.accounts.AccountsSource
 import com.kbcoding.androiddevelopmentbasics.app.utils.MutableLiveEvent
 import com.kbcoding.androiddevelopmentbasics.app.utils.MutableUnitLiveEvent
 import com.kbcoding.androiddevelopmentbasics.app.utils.logger.LogCatLogger
@@ -16,14 +13,16 @@ import com.kbcoding.androiddevelopmentbasics.app.utils.logger.Logger
 import com.kbcoding.androiddevelopmentbasics.app.utils.publishEvent
 import com.kbcoding.androiddevelopmentbasics.app.utils.share
 import com.kbcoding.core.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EditProfileViewModel(
-    accountsRepository: AccountsRepository = Singletons.accountsRepository,
-    logger: Logger = LogCatLogger
+@HiltViewModel
+class EditProfileViewModel @Inject constructor(
+    accountsRepository: AccountsRepository,
+    logger: Logger
 ) : BaseViewModel(accountsRepository, logger) {
 
     private val _initialUsernameEvent = MutableLiveEvent<String>()

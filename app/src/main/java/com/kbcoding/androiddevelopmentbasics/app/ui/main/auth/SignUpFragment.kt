@@ -14,7 +14,9 @@ import com.kbcoding.androiddevelopmentbasics.app.model.accounts.entities.SignUpD
 import com.kbcoding.androiddevelopmentbasics.app.utils.observeEvent
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentSignUpBinding
 import com.kbcoding.core.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
     private val args by navArgs<SignUpFragmentArgs>()
