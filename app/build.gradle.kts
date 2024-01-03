@@ -62,10 +62,12 @@ dependencies {
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // Paging library
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
+
+    implementation("com.elveum:element-adapter:0.3")
 
     // Room
     implementation("androidx.room:room-runtime:2.6.1")
