@@ -1,10 +1,32 @@
 package com.kbcoding.androiddevelopmentbasics
 
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.spyk
+import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.util.concurrent.Executor
 
+
 class ResourceManagerTest {
+
+    @Test
+    fun testDemo() {
+        val testExecutor = mockk<Executor>()
+        val testErrorHandler = mockk<ErrorHandler<String>>()
+        val resourceManager = ResourceManager(
+            executor = testExecutor,
+            errorHandler = testErrorHandler
+        )
+        val resourceManagerSpy = spyk(resourceManager)
+        every { resourceManagerSpy.destroy() } answers {
+            println("destroy() call has been replaced by the spy")
+        }
+        resourceManagerSpy.destroy()
+
+        verify(exactly = 1) { resourceManagerSpy.destroy() }
+    }
 
     @Test
     fun consumeResourceAfterSetResourceCallReceivesResource() {
