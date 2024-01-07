@@ -28,6 +28,27 @@ class ResourceManagerTest {
         verify(exactly = 1) { resourceManagerSpy.destroy() }
     }
 
+    interface Bar {
+        fun foo()
+        fun getInt(): Int
+        fun getBoolean(): Boolean
+    }
+
+    @Test
+    fun testDemoMockkRelaxedTrue() {
+        val testExecutor = mockk<Executor>()
+        val testErrorHandler = mockk<ErrorHandler<String>>()
+        val resourceManager = ResourceManager(
+            executor = testExecutor,
+            errorHandler = testErrorHandler
+        )
+        val bar = mockk<Bar>(relaxed = true)
+
+        bar.foo()
+        println("Int: ${bar.getInt()}")
+        println("Boolean: ${bar.getBoolean()}")
+    }
+
     @Test
     fun consumeResourceAfterSetResourceCallReceivesResource() {
         // arrange
