@@ -50,6 +50,28 @@ class ResourceManagerTest {
     }
 
     @Test
+    fun testDemoMockkWithEvery() {
+        val testExecutor = mockk<Executor>()
+        val testErrorHandler = mockk<ErrorHandler<String>>()
+        val resourceManager = ResourceManager(
+            executor = testExecutor,
+            errorHandler = testErrorHandler
+        )
+        val bar = mockk<Bar>()
+        every { bar.foo() } answers {
+            println("foo() method has been called")
+        }
+//        every { bar.getBoolean() } answers { true }
+//        every { bar.getInt() } answers { 479 }
+        every { bar.getBoolean() } returns true
+        every { bar.getInt() } returns 479
+
+        bar.foo()
+        println("Int: ${bar.getInt()}")
+        println("Boolean: ${bar.getBoolean()}")
+    }
+
+    @Test
     fun consumeResourceAfterSetResourceCallReceivesResource() {
         // arrange
         val resourceManager = createResourceManager()
