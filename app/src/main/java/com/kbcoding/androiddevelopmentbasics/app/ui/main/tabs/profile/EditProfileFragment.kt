@@ -55,7 +55,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
         binding.usernameEditText.setText(username)
     }
 
-    private fun observeEmptyFieldErrorEvent() = viewModel.showErrorEvent.observeEvent(viewLifecycleOwner) {
+    private fun observeEmptyFieldErrorEvent() = viewModel.showErrorMessageResEvent.observeEvent(viewLifecycleOwner) {
         Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
     }
 
