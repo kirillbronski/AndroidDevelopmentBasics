@@ -1,10 +1,10 @@
 package com.kbcoding.androiddevelopmentbasics.app.utils.async
 
-import com.kbcoding.androiddevelopmentbasics.app.model.Empty
-import com.kbcoding.androiddevelopmentbasics.app.model.Error
-import com.kbcoding.androiddevelopmentbasics.app.model.Pending
-import com.kbcoding.androiddevelopmentbasics.app.model.ResponseResult
-import com.kbcoding.androiddevelopmentbasics.app.model.Success
+import com.kbcoding.androiddevelopmentbasics.app.domain.Empty
+import com.kbcoding.androiddevelopmentbasics.app.domain.Error
+import com.kbcoding.androiddevelopmentbasics.app.domain.Pending
+import com.kbcoding.androiddevelopmentbasics.app.domain.ResponseResult
+import com.kbcoding.androiddevelopmentbasics.app.domain.Success
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
@@ -20,10 +20,8 @@ typealias ValueListener<T> = (ResponseResult<T>) -> Unit
  * for the specified argument is removed by calling [removeListener].
  */
 class LazyListenersSubject<A : Any, T : Any>(
-    // for real server it's better to use cached thread pool.
-    private val loaderExecutor: ExecutorService = Executors.newSingleThreadExecutor(),
-    // single thread pool to avoid multi-threading issues
-    private val handlerExecutor: ExecutorService = Executors.newSingleThreadExecutor(),
+    private val loaderExecutor: ExecutorService,
+    private val handlerExecutor: ExecutorService,
     private val loader: ValueLoader<A, T>
 ) {
 
@@ -52,7 +50,7 @@ class LazyListenersSubject<A : Any, T : Any>(
      * the value loader is cancelled for this argument.
      */
     fun removeListener(argument: A, listener: ValueListener<T>) = handlerExecutor.execute {
-        listeners.removeAll { it.listener == listener && it.arg == argument }
+        listeners.removeAll { it.listener === listener && it.arg == argument }
         if (!listeners.any { it.arg == argument }) {
             cancel(argument)
         }

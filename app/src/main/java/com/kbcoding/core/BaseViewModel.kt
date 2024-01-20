@@ -3,10 +3,10 @@ package com.kbcoding.core
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kbcoding.androiddevelopmentbasics.R
-import com.kbcoding.androiddevelopmentbasics.app.model.AuthException
-import com.kbcoding.androiddevelopmentbasics.app.model.BackendException
-import com.kbcoding.androiddevelopmentbasics.app.model.ConnectionException
-import com.kbcoding.androiddevelopmentbasics.app.model.accounts.AccountsRepository
+import com.kbcoding.androiddevelopmentbasics.app.domain.AuthException
+import com.kbcoding.androiddevelopmentbasics.app.domain.BackendException
+import com.kbcoding.androiddevelopmentbasics.app.domain.ConnectionException
+import com.kbcoding.androiddevelopmentbasics.app.domain.accounts.AccountsRepository
 import com.kbcoding.androiddevelopmentbasics.app.utils.MutableLiveEvent
 import com.kbcoding.androiddevelopmentbasics.app.utils.MutableUnitLiveEvent
 import com.kbcoding.androiddevelopmentbasics.app.utils.logger.Logger
@@ -14,7 +14,6 @@ import com.kbcoding.androiddevelopmentbasics.app.utils.publishEvent
 import com.kbcoding.androiddevelopmentbasics.app.utils.share
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import okhttp3.logging.HttpLoggingInterceptor
 
 open class BaseViewModel(
     val accountsRepository: AccountsRepository,
@@ -57,5 +56,8 @@ open class BaseViewModel(
     fun logout() {
         accountsRepository.logout()
     }
+
+    protected fun showErrorMessage(messageRes: Int) =
+        _showErrorMessageResEvent.publishEvent(messageRes)
 
 }

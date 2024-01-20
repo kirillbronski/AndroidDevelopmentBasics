@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.kbcoding.androiddevelopmentbasics.app.ui.MainActivity
-import com.kbcoding.androiddevelopmentbasics.app.ui.MainActivityArgs
+import com.kbcoding.androiddevelopmentbasics.app.ui.main.MainActivity
+import com.kbcoding.androiddevelopmentbasics.app.ui.main.MainActivityArgs
 import com.kbcoding.androiddevelopmentbasics.app.utils.observeEvent
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentSplashBinding
 import com.kbcoding.core.BaseFragment

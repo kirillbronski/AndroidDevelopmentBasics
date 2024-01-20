@@ -1,7 +1,7 @@
 package com.kbcoding.androiddevelopmentbasics.app.ui.splash
 
 import androidx.lifecycle.viewModelScope
-import com.kbcoding.androiddevelopmentbasics.app.model.accounts.AccountsRepository
+import com.kbcoding.androiddevelopmentbasics.app.domain.accounts.AccountsRepository
 import com.kbcoding.androiddevelopmentbasics.app.utils.MutableLiveEvent
 import com.kbcoding.androiddevelopmentbasics.app.utils.logger.LogCatLogger
 import com.kbcoding.androiddevelopmentbasics.app.utils.logger.Logger

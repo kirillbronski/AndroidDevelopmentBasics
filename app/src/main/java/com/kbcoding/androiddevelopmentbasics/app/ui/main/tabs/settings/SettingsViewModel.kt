@@ -2,13 +2,12 @@ package com.kbcoding.androiddevelopmentbasics.app.ui.main.tabs.settings
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.kbcoding.androiddevelopmentbasics.app.model.ResponseResult
-import com.kbcoding.androiddevelopmentbasics.app.model.accounts.AccountsRepository
-import com.kbcoding.androiddevelopmentbasics.app.model.boxes.BoxesRepository
-import com.kbcoding.androiddevelopmentbasics.app.model.boxes.entities.Box
-import com.kbcoding.androiddevelopmentbasics.app.model.boxes.entities.BoxAndSettings
-import com.kbcoding.androiddevelopmentbasics.app.model.boxes.entities.BoxesFilter
-import com.kbcoding.androiddevelopmentbasics.app.utils.logger.LogCatLogger
+import com.kbcoding.androiddevelopmentbasics.app.domain.ResponseResult
+import com.kbcoding.androiddevelopmentbasics.app.domain.accounts.AccountsRepository
+import com.kbcoding.androiddevelopmentbasics.app.domain.boxes.BoxesRepository
+import com.kbcoding.androiddevelopmentbasics.app.domain.boxes.entities.Box
+import com.kbcoding.androiddevelopmentbasics.app.domain.boxes.entities.BoxAndSettings
+import com.kbcoding.androiddevelopmentbasics.app.domain.boxes.entities.BoxesFilter
 import com.kbcoding.androiddevelopmentbasics.app.utils.logger.Logger
 import com.kbcoding.androiddevelopmentbasics.app.utils.share
 import com.kbcoding.core.BaseViewModel

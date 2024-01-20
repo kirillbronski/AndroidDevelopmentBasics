@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kbcoding.androiddevelopmentbasics.R
-import com.kbcoding.androiddevelopmentbasics.app.model.boxes.entities.Box
-import com.kbcoding.androiddevelopmentbasics.app.model.boxes.entities.BoxAndSettings
+import com.kbcoding.androiddevelopmentbasics.app.domain.boxes.entities.Box
+import com.kbcoding.androiddevelopmentbasics.app.domain.boxes.entities.BoxAndSettings
 import com.kbcoding.androiddevelopmentbasics.databinding.ItemSettingsBinding
 
 class SettingsAdapter(

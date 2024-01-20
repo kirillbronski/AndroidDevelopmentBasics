@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.kbcoding.androiddevelopmentbasics.R
-import com.kbcoding.androiddevelopmentbasics.app.model.accounts.entities.Account
+import com.kbcoding.androiddevelopmentbasics.app.domain.accounts.entities.Account
 import com.kbcoding.androiddevelopmentbasics.app.utils.findTopNavController
 import com.kbcoding.androiddevelopmentbasics.app.utils.observeResults
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentProfileBinding

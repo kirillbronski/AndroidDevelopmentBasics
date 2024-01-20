@@ -8,9 +8,9 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.kbcoding.androiddevelopmentbasics.app.model.ResponseResult
-import com.kbcoding.androiddevelopmentbasics.app.model.Success
-import com.kbcoding.androiddevelopmentbasics.app.ui.views.ResultView
+import com.kbcoding.androiddevelopmentbasics.app.domain.ResponseResult
+import com.kbcoding.androiddevelopmentbasics.app.domain.Success
+import com.kbcoding.androiddevelopmentbasics.app.views.ResultView
 import com.kbcoding.core.BaseFragment
 
 fun <T> LiveData<T>.requireValue(): T {

@@ -1,12 +1,11 @@
 package com.kbcoding.androiddevelopmentbasics.app.ui.main.tabs.dashboard
 
 import androidx.lifecycle.viewModelScope
-import com.kbcoding.androiddevelopmentbasics.app.model.Success
-import com.kbcoding.androiddevelopmentbasics.app.model.accounts.AccountsRepository
-import com.kbcoding.androiddevelopmentbasics.app.model.boxes.BoxesRepository
-import com.kbcoding.androiddevelopmentbasics.app.model.boxes.entities.BoxesFilter
+import com.kbcoding.androiddevelopmentbasics.app.domain.Success
+import com.kbcoding.androiddevelopmentbasics.app.domain.accounts.AccountsRepository
+import com.kbcoding.androiddevelopmentbasics.app.domain.boxes.BoxesRepository
+import com.kbcoding.androiddevelopmentbasics.app.domain.boxes.entities.BoxesFilter
 import com.kbcoding.androiddevelopmentbasics.app.utils.MutableLiveEvent
-import com.kbcoding.androiddevelopmentbasics.app.utils.logger.LogCatLogger
 import com.kbcoding.androiddevelopmentbasics.app.utils.logger.Logger
 import com.kbcoding.androiddevelopmentbasics.app.utils.publishEvent
 import com.kbcoding.androiddevelopmentbasics.app.utils.share

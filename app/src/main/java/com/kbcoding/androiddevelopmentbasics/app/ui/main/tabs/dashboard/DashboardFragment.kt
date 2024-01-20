@@ -8,8 +8,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.kbcoding.androiddevelopmentbasics.R
-import com.kbcoding.androiddevelopmentbasics.app.model.boxes.entities.Box
-import com.kbcoding.androiddevelopmentbasics.app.ui.views.DashboardItemView
+import com.kbcoding.androiddevelopmentbasics.app.domain.boxes.entities.Box
+import com.kbcoding.androiddevelopmentbasics.app.views.DashboardItemView
 import com.kbcoding.androiddevelopmentbasics.app.utils.observeResults
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentDashboardBinding
 import com.kbcoding.core.BaseFragment

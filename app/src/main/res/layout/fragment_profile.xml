@@ -112,7 +112,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:text="@string/action_logout"/>
 
-        <com.kbcoding.androiddevelopmentbasics.app.ui.views.ResultView
+        <com.kbcoding.androiddevelopmentbasics.app.views.ResultView
             android:id="@+id/resultView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

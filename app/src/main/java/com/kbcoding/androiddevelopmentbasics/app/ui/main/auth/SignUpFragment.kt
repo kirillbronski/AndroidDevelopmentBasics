@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputLayout
-import com.kbcoding.androiddevelopmentbasics.app.model.accounts.entities.SignUpData
+import com.kbcoding.androiddevelopmentbasics.app.domain.accounts.entities.SignUpData
 import com.kbcoding.androiddevelopmentbasics.app.utils.observeEvent
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentSignUpBinding
 import com.kbcoding.core.BaseFragment

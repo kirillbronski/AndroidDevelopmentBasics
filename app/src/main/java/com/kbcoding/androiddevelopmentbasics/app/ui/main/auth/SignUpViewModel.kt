@@ -4,15 +4,14 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kbcoding.androiddevelopmentbasics.R
-import com.kbcoding.androiddevelopmentbasics.app.model.AccountAlreadyExistsException
-import com.kbcoding.androiddevelopmentbasics.app.model.EmptyFieldException
-import com.kbcoding.androiddevelopmentbasics.app.model.Field
-import com.kbcoding.androiddevelopmentbasics.app.model.PasswordMismatchException
-import com.kbcoding.androiddevelopmentbasics.app.model.accounts.AccountsRepository
-import com.kbcoding.androiddevelopmentbasics.app.model.accounts.entities.SignUpData
+import com.kbcoding.androiddevelopmentbasics.app.domain.AccountAlreadyExistsException
+import com.kbcoding.androiddevelopmentbasics.app.domain.EmptyFieldException
+import com.kbcoding.androiddevelopmentbasics.app.domain.Field
+import com.kbcoding.androiddevelopmentbasics.app.domain.PasswordMismatchException
+import com.kbcoding.androiddevelopmentbasics.app.domain.accounts.AccountsRepository
+import com.kbcoding.androiddevelopmentbasics.app.domain.accounts.entities.SignUpData
 import com.kbcoding.androiddevelopmentbasics.app.utils.MutableLiveEvent
 import com.kbcoding.androiddevelopmentbasics.app.utils.MutableUnitLiveEvent
-import com.kbcoding.androiddevelopmentbasics.app.utils.logger.LogCatLogger
 import com.kbcoding.androiddevelopmentbasics.app.utils.logger.Logger
 import com.kbcoding.androiddevelopmentbasics.app.utils.publishEvent
 import com.kbcoding.androiddevelopmentbasics.app.utils.requireValue
@@ -57,10 +56,8 @@ class SignUpViewModel @Inject constructor(
         _state.value = when (e.field) {
             Field.Email -> _state.requireValue()
                 .copy(emailErrorMessageRes = R.string.field_is_empty)
-
             Field.Username -> _state.requireValue()
                 .copy(usernameErrorMessageRes = R.string.field_is_empty)
-
             Field.Password -> _state.requireValue()
                 .copy(passwordErrorMessageRes = R.string.field_is_empty)
         }

@@ -3,12 +3,11 @@ package com.kbcoding.androiddevelopmentbasics.app.ui.main.tabs.profile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kbcoding.androiddevelopmentbasics.R
-import com.kbcoding.androiddevelopmentbasics.app.model.EmptyFieldException
-import com.kbcoding.androiddevelopmentbasics.app.model.Success
-import com.kbcoding.androiddevelopmentbasics.app.model.accounts.AccountsRepository
+import com.kbcoding.androiddevelopmentbasics.app.domain.EmptyFieldException
+import com.kbcoding.androiddevelopmentbasics.app.domain.Success
+import com.kbcoding.androiddevelopmentbasics.app.domain.accounts.AccountsRepository
 import com.kbcoding.androiddevelopmentbasics.app.utils.MutableLiveEvent
 import com.kbcoding.androiddevelopmentbasics.app.utils.MutableUnitLiveEvent
-import com.kbcoding.androiddevelopmentbasics.app.utils.logger.LogCatLogger
 import com.kbcoding.androiddevelopmentbasics.app.utils.logger.Logger
 import com.kbcoding.androiddevelopmentbasics.app.utils.publishEvent
 import com.kbcoding.androiddevelopmentbasics.app.utils.share

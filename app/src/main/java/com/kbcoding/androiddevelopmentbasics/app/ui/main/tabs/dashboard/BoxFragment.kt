@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kbcoding.androiddevelopmentbasics.R
-import com.kbcoding.androiddevelopmentbasics.app.ui.views.DashboardItemView
+import com.kbcoding.androiddevelopmentbasics.app.views.DashboardItemView
 import com.kbcoding.androiddevelopmentbasics.app.utils.observeEvent
 import com.kbcoding.androiddevelopmentbasics.app.utils.viewModelCreator
 import com.kbcoding.androiddevelopmentbasics.databinding.FragmentBoxBinding

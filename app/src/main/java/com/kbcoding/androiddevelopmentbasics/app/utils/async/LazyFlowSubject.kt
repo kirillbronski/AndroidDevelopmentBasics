@@ -1,5 +1,6 @@
 package com.kbcoding.androiddevelopmentbasics.app.utils.async
 
+import com.kbcoding.androiddevelopmentbasics.app.domain.ResponseResult
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -12,14 +13,16 @@ typealias SuspendValueLoader<A, T> = suspend (A) -> T?
  * @see LazyListenersSubject
  */
 class LazyFlowSubject<A : Any, T : Any>(
+    lazyListenersFactory: LazyListenersFactory,
     private val loader: SuspendValueLoader<A, T>
 ) {
 
-    private val lazyListenersSubject = LazyListenersSubject<A, T> { arg ->
-        runBlocking {
-            loader.invoke(arg)
+    private val lazyListenersSubject =
+        lazyListenersFactory.createLazyListenersSubject<A, T> { arg ->
+            runBlocking {
+                loader.invoke(arg)
+            }
         }
-    }
 
     /**
      * @see [LazyListenersSubject.reloadAll]
@@ -46,7 +49,7 @@ class LazyFlowSubject<A : Any, T : Any>(
      * @see LazyListenersSubject.addListener
      * @see LazyListenersSubject.removeListener
      */
-    fun listen(argument: A): Flow<com.kbcoding.androiddevelopmentbasics.app.model.ResponseResult<T>> = callbackFlow {
+    fun listen(argument: A): Flow<ResponseResult<T>> = callbackFlow {
         val listener: ValueListener<T> = { result ->
             trySend(result)
         }
