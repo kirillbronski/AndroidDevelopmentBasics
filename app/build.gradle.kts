@@ -52,6 +52,7 @@ android {
 dependencies {
 
     implementation("com.google.dagger:hilt-android:2.50")
+    implementation("androidx.activity:activity:1.8.2")
     kapt("com.google.dagger:hilt-compiler:2.50")
 
     // OkHTTP
