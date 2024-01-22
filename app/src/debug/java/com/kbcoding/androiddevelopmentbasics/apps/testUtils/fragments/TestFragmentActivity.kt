@@ -1,4 +1,4 @@
-package com.kbcoding.androiddevelopmentbasics.testUtils.fragments
+package com.kbcoding.androiddevelopmentbasics.apps.testUtils.fragments
 
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint

@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
-import com.kbcoding.androiddevelopmentbasics.testUtils.fragments.TestFragmentActivity
+import com.kbcoding.androiddevelopmentbasics.apps.testUtils.fragments.TestFragmentActivity
 
 /**
  * Launch a fragment managed by Hilt and Navigation Component in the test

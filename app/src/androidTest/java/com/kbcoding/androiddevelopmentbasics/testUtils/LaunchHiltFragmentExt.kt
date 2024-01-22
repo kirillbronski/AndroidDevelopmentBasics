@@ -5,7 +5,7 @@ import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
-import com.kbcoding.androiddevelopmentbasics.testUtils.fragments.TestFragmentActivity
+import com.kbcoding.androiddevelopmentbasics.apps.testUtils.fragments.TestFragmentActivity
 
 /**
  * Launch a fragment managed by Hilt in the test activity container.
