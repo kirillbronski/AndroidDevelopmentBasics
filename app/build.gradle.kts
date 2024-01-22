@@ -20,6 +20,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // for espresso with hilt
         testInstrumentationRunner = "com.kbcoding.androiddevelopmentbasics.HiltAndroidTestRunner"
     }
 
@@ -36,6 +38,13 @@ android {
     packaging {
         resources.excludes.add("META-INF/LICENSE.md")
         resources.excludes.add("META-INF/LICENSE-notice.md")
+    }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+
     }
 
     ksp {
@@ -104,13 +113,18 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
 
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
     testImplementation("io.mockk:mockk:1.13.9")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2")
+    testImplementation("androidx.navigation:navigation-testing:2.7.6")
+    testImplementation("com.google.dagger:hilt-android-testing:2.50")
     testImplementation("androidx.arch.core:core-testing:2.2.0")
+    kaptTest("com.google.dagger:hilt-android-compiler:2.50")
 
+    // Robolectric
+    testImplementation("org.robolectric:robolectric:4.9")
+
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("org.hamcrest:hamcrest:2.2")
     androidTestImplementation("androidx.test:runner:1.5.2")
     androidTestImplementation("androidx.test:rules:1.5.0")
@@ -123,4 +137,6 @@ dependencies {
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.50")
     debugImplementation("io.mockk:mockk-android:1.13.9")
     debugImplementation("androidx.fragment:fragment-testing:1.6.2")
+
+
 }
