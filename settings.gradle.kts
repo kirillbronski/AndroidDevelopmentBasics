@@ -15,4 +15,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "AndroidDevelopmentBasics"
 include(":app")
- 
+include(":myAndroidLibrary")
+include(":myKotlinLibrary")
+include(":uiAlerts")
+include(":uiAlertsImpl")
