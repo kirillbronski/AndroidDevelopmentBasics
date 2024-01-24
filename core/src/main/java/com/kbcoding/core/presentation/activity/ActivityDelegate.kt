@@ -28,7 +28,7 @@ class ActivityDelegate(
 
     internal val sideEffectPluginsManager = SideEffectPluginsManager()
 
-    private val activityViewModel by activity.viewModelCreator<ActivityScopeViewModel> { ActivityScopeViewModel() }
+    private val activityViewModel by activity.viewModelCreator<com.kbcoding.core.ActivityScopeViewModel> { com.kbcoding.core.ActivityScopeViewModel() }
 
     private val implementersHolder = SideEffectImplementationsHolder()
 
@@ -105,7 +105,7 @@ class ActivityDelegate(
         implementersHolder.implementations.forEach { it.onRequestUpdates() }
     }
 
-    fun getActivityScopeViewModel(): ActivityScopeViewModel {
+    fun getActivityScopeViewModel(): com.kbcoding.core.ActivityScopeViewModel {
         return activityViewModel
     }
 
